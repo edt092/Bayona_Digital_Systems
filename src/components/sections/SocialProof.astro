@@ -1,0 +1,73 @@
+---
+const clientLogos = [
+  { name: 'La Brasa Grill', logo: '/companies_logos/la_brasa_grill.png' },
+  { name: 'Apex Consulting', logo: '/companies_logos/apex_consulting.png' },
+  { name: 'Orígen Artesanal', logo: '/companies_logos/origen_artesanal.png' },
+  { name: 'Sonrisa Perfecta', logo: '/companies_logos/sonrisa_perfecta.png' },
+  { name: 'Tech Solutions', logo: '/companies_logos/tech_solutions.png' },
+  { name: 'Verde Digital', logo: '/companies_logos/verde_digital.png' },
+  { name: 'KSPromocionales', logo: '/companies_logos/kronosolopromocionales.png' },
+];
+
+const metrics = [
+  { value: '48+', label: 'Proyectos entregados', icon: '📦' },
+  { value: '97%', label: 'Tasa de satisfacción', icon: '⭐' },
+  { value: '$2M+', label: 'Ingresos generados', icon: '💰' },
+];
+---
+
+<section class="py-12 border-y border-[var(--color-border)] bg-white" aria-label="Clientes y resultados">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Label -->
+    <p class="text-center text-xs font-semibold text-[var(--color-subtle)] uppercase tracking-widest mb-8">
+      Marcas que confían en nuestro trabajo
+    </p>
+
+    <!-- Logos scroll -->
+    <div class="relative overflow-hidden mb-10">
+      <div class="flex items-center gap-8 animate-scroll" style="width: max-content;">
+        {[...clientLogos, ...clientLogos].map((client) => (
+          <div class="flex items-center gap-2.5 flex-shrink-0 cursor-default group">
+            <img
+              src={client.logo}
+              alt={client.name}
+              class="h-8 w-auto object-contain tech-logo"
+            />
+            <span class="text-sm font-semibold whitespace-nowrap text-[var(--color-subtle)] group-hover:text-[var(--color-muted)] transition-colors duration-200">{client.name}</span>
+          </div>
+        ))}
+      </div>
+
+      <!-- Gradient fade edges -->
+      <div class="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
+      <div class="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="grid grid-cols-3 gap-6 max-w-lg mx-auto">
+      {metrics.map(metric => (
+        <div class="text-center">
+          <div class="text-2xl font-black text-[var(--color-primary)] font-display">{metric.value}</div>
+          <div class="text-xs text-[var(--color-muted)] mt-0.5">{metric.label}</div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .animate-scroll {
+    animation: scroll 25s linear infinite;
+  }
+
+  .animate-scroll:hover {
+    animation-play-state: paused;
+  }
+</style>

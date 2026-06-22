@@ -1,0 +1,210 @@
+---
+import { projects } from '@/data/projects';
+import Layout from '@/components/layout/Layout.astro';
+
+export function getStaticPaths() {
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout
+  title={`Caso de estudio: ${project.title}`}
+  description={project.description ?? `${project.problem} Solución: ${project.solution}. Resultado: ${project.result}`}
+>
+  <!-- Header -->
+  <header class="pt-32 pb-12 bg-[var(--color-surface)] border-b border-[var(--color-border)]">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="flex items-center gap-3 mb-6">
+        <a href="/#proyectos" class="text-sm text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors flex items-center gap-1.5">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+          Proyectos
+        </a>
+        <span class="text-[var(--color-border)]">/</span>
+        <span class="text-sm text-[var(--color-muted)] truncate">{project.title}</span>
+      </div>
+
+      <div class="flex flex-wrap gap-2 mb-4">
+        {project.tags.map(tag => (
+          <span class="badge badge-primary text-xs">{tag}</span>
+        ))}
+        <span class="badge badge-accent text-xs">{project.industry}</span>
+      </div>
+
+      <h1 class="text-3xl md:text-4xl font-black mb-4">{project.title}</h1>
+
+      <div class="flex items-center gap-3">
+        <div class="badge badge-accent">
+          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+          </svg>
+          Resultado: {project.result}
+        </div>
+        {project.githubUrl && (
+          <a
+            href={project.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-1.5 text-sm font-semibold text-[var(--color-muted)] hover:text-[var(--color-ink)] transition-colors"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            </svg>
+            Ver en GitHub
+          </a>
+        )}
+      </div>
+    </div>
+  </header>
+
+  <!-- Case study content -->
+  <main class="section">
+    <div class="max-w-4xl mx-auto px-6">
+
+      <!-- Hero banner -->
+      <div class="w-full h-72 rounded-2xl mb-12 overflow-hidden relative">
+        {project.image ? (
+          <img
+            src={project.image}
+            alt={`Imagen del proyecto ${project.title}`}
+            class="w-full h-full object-cover"
+          />
+        ) : (
+          <div
+            class="w-full h-full flex items-center justify-center"
+            style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);"
+          >
+            <div class="absolute inset-0 bg-grid opacity-15"></div>
+            <div class="relative text-center text-white">
+              <div class="text-6xl font-black font-display mb-2">
+                {project.title.split(' ').map((w: string) => w[0]).join('').slice(0, 2)}
+              </div>
+              <div class="text-white/70">{project.industry}</div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Description -->
+      {project.description && (
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed mb-12 max-w-3xl">
+          {project.description}
+        </p>
+      )}
+
+      <!-- Problem / Solution / Result -->
+      <div class="grid md:grid-cols-3 gap-8 mb-14">
+        <div class="card p-6">
+          <div class="text-xs font-bold text-[var(--color-muted)] uppercase tracking-wider mb-2">El Problema</div>
+          <p class="text-[var(--color-ink)] font-medium leading-relaxed">{project.problem}</p>
+        </div>
+        <div class="card p-6">
+          <div class="text-xs font-bold text-[var(--color-muted)] uppercase tracking-wider mb-2">La Solución</div>
+          <p class="text-[var(--color-ink)] font-medium leading-relaxed">{project.solution}</p>
+        </div>
+        <div class="card p-6 border-[var(--color-secondary)]/30" style="background: rgb(37 99 235 / 0.03);">
+          <div class="text-xs font-bold text-[var(--color-secondary)] uppercase tracking-wider mb-2">El Resultado</div>
+          <p class="text-[var(--color-secondary)] font-black text-xl font-display">{project.result}</p>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      {project.techStack && project.techStack.length > 0 && (
+        <div class="mb-14">
+          <h2 class="text-xl font-black mb-6 flex items-center gap-2">
+            <span class="w-1 h-5 rounded-full bg-[var(--color-primary)] inline-block"></span>
+            Stack Tecnológico
+          </h2>
+          <div class="grid sm:grid-cols-2 gap-3">
+            {project.techStack.map(tech => (
+              <div class="card p-4 flex items-start gap-3">
+                <div class="w-2 h-2 rounded-full bg-[var(--color-primary)] mt-1.5 flex-shrink-0"></div>
+                <div>
+                  <div class="font-bold text-sm text-[var(--color-ink)]">{tech.name}</div>
+                  <div class="text-xs text-[var(--color-muted)] mt-0.5">{tech.role}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Pipeline -->
+      {project.pipeline && project.pipeline.length > 0 && (
+        <div class="mb-14">
+          <h2 class="text-xl font-black mb-6 flex items-center gap-2">
+            <span class="w-1 h-5 rounded-full bg-[var(--color-secondary)] inline-block"></span>
+            Pipeline de Datos
+          </h2>
+          <div class="relative">
+            <div class="absolute left-4 top-0 bottom-0 w-px bg-[var(--color-border)]"></div>
+            <ol class="space-y-4 pl-0">
+              {project.pipeline.map((step, i) => (
+                <li class="flex gap-4 items-start">
+                  <div class="flex-shrink-0 w-8 h-8 rounded-full bg-[var(--color-secondary)] text-white text-xs font-black flex items-center justify-center z-10 relative">
+                    {i + 1}
+                  </div>
+                  <div class="card p-4 flex-1">
+                    <p class="text-sm text-[var(--color-ink)] leading-relaxed">{step}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      )}
+
+      <!-- Features -->
+      {project.features && project.features.length > 0 && (
+        <div class="mb-14">
+          <h2 class="text-xl font-black mb-6 flex items-center gap-2">
+            <span class="w-1 h-5 rounded-full" style="background: var(--color-accent, #10b981);"></span>
+            Características Técnicas
+          </h2>
+          <div class="grid sm:grid-cols-2 gap-3">
+            {project.features.map(feature => (
+              <div class="flex items-start gap-3 card p-4">
+                <svg class="w-4 h-4 text-[var(--color-secondary)] flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span class="text-sm text-[var(--color-ink)] leading-relaxed">{feature}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- CTA -->
+      <div class="text-center py-12 border-t border-[var(--color-border)]">
+        <h3 class="text-2xl font-black mb-3">¿Quieres resultados similares?</h3>
+        <p class="text-[var(--color-muted)] mb-6 max-w-md mx-auto">
+          Cuéntame sobre tu proyecto y diseñamos juntos la estrategia.
+        </p>
+        <div class="flex items-center justify-center gap-4 flex-wrap">
+          <a href="#" data-booking-open class="btn btn-primary">
+            Agenda una llamada
+          </a>
+          {project.githubUrl && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline flex items-center gap-2"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+              </svg>
+              Ver código en GitHub
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

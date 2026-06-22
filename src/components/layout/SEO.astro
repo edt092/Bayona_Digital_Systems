@@ -1,0 +1,71 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+}
+
+const {
+  title = 'Bayona Digital Systems — Desarrollo Web, SEO & Marketing Digital',
+  description = 'Ayudo a negocios y marcas personales a crecer mediante desarrollo web profesional, SEO y marketing digital. Sitios que convierten visitantes en clientes.',
+  image = '/og-image.jpg',
+  noindex = false,
+  type = 'website',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const fullTitle = title.includes('Bayona') ? title : `${title} | Bayona Digital Systems`;
+---
+
+<!-- Primary -->
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={new URL(image, Astro.site)} />
+<meta property="og:site_name" content="Bayona Digital Systems" />
+<meta property="og:locale" content="es_ES" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image, Astro.site)} />
+
+<!-- Schema Person -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Bayona Digital Systems",
+    "url": "https://bayonadigitalsystems.com",
+    "jobTitle": "Web Developer & Digital Marketing Specialist",
+    "description": "Desarrollador web y especialista en marketing digital enfocado en resultados medibles.",
+    "sameAs": [
+      "https://linkedin.com/in/bayonadigital",
+      "https://github.com/bayonadigital"
+    ]
+  }
+</script>
+
+<!-- Schema ProfessionalService -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Bayona Digital Systems",
+    "description": "Desarrollo web, SEO y marketing digital para negocios y marcas personales.",
+    "url": "https://bayonadigitalsystems.com",
+    "areaServed": "Worldwide",
+    "serviceType": ["Web Development", "SEO", "Digital Marketing"],
+    "priceRange": "$$"
+  }
+</script>

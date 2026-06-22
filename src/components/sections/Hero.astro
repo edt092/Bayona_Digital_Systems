@@ -1,0 +1,171 @@
+---
+const stats = [
+  { value: 48, suffix: '+', label: 'Proyectos entregados' },
+  { value: 97, suffix: '%', label: 'Clientes satisfechos' },
+  { value: 5, suffix: '+', label: 'Años de experiencia' },
+];
+---
+
+<section
+  id="inicio"
+  class="relative min-h-screen flex items-center pt-16 overflow-hidden"
+  aria-label="Inicio"
+>
+  <!-- Background -->
+  <div class="absolute inset-0 bg-grid"></div>
+
+  <!-- Gradient blobs -->
+  <div
+    class="absolute top-1/4 -left-32 w-[600px] h-[600px] rounded-full opacity-30"
+    style="background: radial-gradient(circle, rgb(37 99 235 / 0.12) 0%, transparent 70%);"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="absolute bottom-1/4 -right-32 w-[500px] h-[500px] rounded-full opacity-20"
+    style="background: radial-gradient(circle, rgb(6 182 212 / 0.15) 0%, transparent 70%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 w-full py-20 lg:py-28">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: Content -->
+      <div>
+        <!-- Badge -->
+        <div class="section-badge animate-fade-up">
+          <span class="badge badge-accent">
+            <span class="dot-live"></span>
+            Disponible para nuevos proyectos
+          </span>
+        </div>
+
+        <!-- Heading -->
+        <h1 class="text-4xl md:text-5xl xl:text-6xl font-black leading-[1.1] mb-6 animate-fade-up delay-100">
+          Desarrollo sitios web que
+          <span class="gradient-text block mt-1">convierten visitantes</span>
+          en clientes.
+        </h1>
+
+        <!-- Subheading -->
+        <p class="text-lg text-[var(--color-muted)] leading-relaxed mb-8 max-w-lg animate-fade-up delay-200">
+          Ayudo a negocios y marcas personales a crecer mediante
+          <strong class="text-[var(--color-ink)] font-medium">desarrollo web</strong>,
+          <strong class="text-[var(--color-ink)] font-medium">SEO</strong> y
+          <strong class="text-[var(--color-ink)] font-medium">marketing digital</strong>.
+          Resultados medibles desde el primer mes.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-3 mb-12 animate-fade-up delay-300">
+          <a href="#proyectos" class="btn btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Ver Proyectos
+          </a>
+          <a href="#" data-booking-open class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.9 3.41 2 2 0 0 1 3.88 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            Agenda una llamada
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="flex flex-wrap gap-8 animate-fade-up delay-400">
+          {stats.map(stat => (
+            <div>
+              <div class="flex items-baseline gap-0.5">
+                <span
+                  class="text-3xl font-black text-[var(--color-ink)] font-display"
+                  data-counter={stat.value}
+                >0</span>
+                <span class="text-2xl font-bold text-[var(--color-secondary)] font-display">{stat.suffix}</span>
+              </div>
+              <p class="text-xs text-[var(--color-muted)] mt-0.5 font-medium">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Right: Visual -->
+      <div class="flex items-center justify-center animate-scale-in delay-300 mt-10 lg:mt-0">
+        <div class="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px]">
+
+          <!-- Glow de fondo -->
+          <div
+            class="absolute inset-0 -z-10 scale-105 blur-3xl opacity-25 rounded-3xl"
+            style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 60%, var(--color-accent) 100%);"
+            aria-hidden="true"
+          ></div>
+
+          <!-- Marco decorativo exterior -->
+          <div class="absolute -inset-1 rounded-2xl opacity-30"
+            style="background: linear-gradient(135deg, var(--color-secondary), var(--color-accent)); border-radius: 1.25rem;"
+            aria-hidden="true"
+          ></div>
+
+          <!-- Imagen principal -->
+          <div class="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-[var(--color-border)]">
+            <img
+              src="/images/bayona_digital_header.png"
+              alt="Bayona Digital Systems — proyectos web y marketing digital"
+              class="w-full h-auto object-cover block"
+              loading="eager"
+            />
+            <!-- Overlay sutil en la parte inferior para profundidad -->
+            <div
+              class="absolute inset-0 pointer-events-none"
+              style="background: linear-gradient(to top, rgb(0 0 0 / 0.15) 0%, transparent 50%);"
+              aria-hidden="true"
+            ></div>
+          </div>
+
+          <!-- Floating badge: proyecto entregado -->
+          <div
+            class="absolute -top-4 -right-4 card px-3 py-2 flex items-center gap-2 shadow-lg"
+            style="animation: float 3s ease-in-out infinite;"
+          >
+            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-green-600">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold font-display text-[var(--color-ink)]">Proyecto entregado</span>
+          </div>
+
+          <!-- Floating badge: ventas -->
+          <div
+            class="absolute -bottom-4 -left-4 card px-3 py-2 flex items-center gap-2 shadow-lg"
+            style="animation: float 3s ease-in-out infinite; animation-delay: 1.5s;"
+          >
+            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-[var(--color-secondary)]">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+              </svg>
+            </div>
+            <span class="text-xs font-semibold font-display text-[var(--color-ink)]">+180% en ventas</span>
+          </div>
+
+          <!-- Floating badge: live -->
+          <div
+            class="absolute top-4 -left-5 card px-3 py-1.5 flex items-center gap-1.5 shadow-lg"
+            style="animation: float 3s ease-in-out infinite; animation-delay: 0.8s;"
+          >
+            <span class="dot-live"></span>
+            <span class="text-[10px] font-semibold text-[var(--color-muted)] uppercase tracking-wider">En línea</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in delay-800">
+    <span class="text-xs text-[var(--color-subtle)] font-medium tracking-widest uppercase">Scroll</span>
+    <div class="w-5 h-8 rounded-full border-2 border-[var(--color-border)] flex justify-center pt-1.5">
+      <div class="w-1 h-2 bg-[var(--color-secondary)] rounded-full" style="animation: float 1.5s ease-in-out infinite;"></div>
+    </div>
+  </div>
+</section>

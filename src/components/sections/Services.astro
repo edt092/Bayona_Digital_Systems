@@ -1,0 +1,98 @@
+---
+import { services } from '@/data/services';
+
+const colorMap: Record<string, { bg: string; border: string; text: string; badge: string }> = {
+  primary: {
+    bg: 'bg-[rgb(30_58_138/0.06)]',
+    border: 'border-[rgb(30_58_138/0.12)]',
+    text: 'text-[var(--color-primary)]',
+    badge: 'badge-primary',
+  },
+  secondary: {
+    bg: 'bg-[rgb(37_99_235/0.06)]',
+    border: 'border-[rgb(37_99_235/0.12)]',
+    text: 'text-[var(--color-secondary)]',
+    badge: 'badge-primary',
+  },
+  accent: {
+    bg: 'bg-[rgb(6_182_212/0.06)]',
+    border: 'border-[rgb(6_182_212/0.12)]',
+    text: 'text-[var(--color-accent-dark)]',
+    badge: 'badge-accent',
+  },
+};
+---
+
+<section id="servicios" class="section bg-white" aria-label="Servicios">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+      <div class="section-badge justify-center mb-4">
+        <span class="badge badge-primary">Servicios</span>
+      </div>
+      <h2 class="text-3xl md:text-4xl font-black mb-4">
+        Todo lo que necesita tu negocio para
+        <span class="gradient-text"> crecer online</span>
+      </h2>
+      <p class="text-[var(--color-muted)] text-lg">
+        No trabajo con paquetes genéricos. Cada estrategia se diseña según tus objetivos específicos y tu mercado.
+      </p>
+    </div>
+
+    <!-- Service cards -->
+    <div class="grid md:grid-cols-3 gap-6">
+      {services.map((service, i) => {
+        const colors = colorMap[service.color] || colorMap.primary;
+        return (
+          <article
+            class={`card p-8 flex flex-col reveal delay-${(i + 1) * 100}`}
+            aria-label={`Servicio: ${service.title}`}
+          >
+            <!-- Icon -->
+            <div class={`w-12 h-12 rounded-xl ${colors.bg} border ${colors.border} flex items-center justify-center mb-6 ${colors.text}`}>
+              <div class="w-6 h-6" set:html={service.icon}></div>
+            </div>
+
+            <!-- Problem badge -->
+            <div class="mb-4">
+              <span class={`text-xs font-medium text-[var(--color-muted)] italic`}>
+                "{service.problem}"
+              </span>
+            </div>
+
+            <!-- Title & description -->
+            <h3 class="text-xl font-bold mb-3">{service.title}</h3>
+            <p class="text-[var(--color-muted)] text-sm leading-relaxed mb-6 flex-1">
+              {service.description}
+            </p>
+
+            <!-- Benefits -->
+            <ul class="space-y-2.5 mb-8">
+              {service.benefits.map(benefit => (
+                <li class="flex items-start gap-2.5 text-sm">
+                  <svg class={`w-4 h-4 mt-0.5 flex-shrink-0 ${colors.text}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  <span class="text-[var(--color-ink)]">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+
+            <!-- CTA -->
+            <a
+              href="#contacto"
+              class={`btn btn-outline text-sm w-full justify-center group hover:border-[var(--color-secondary)] hover:text-[var(--color-secondary)]`}
+            >
+              {service.cta}
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </article>
+        );
+      })}
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,141 @@
+---
+const navLinks = [
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Proceso', href: '#proceso' },
+  { label: 'Sobre mí', href: '#sobre-mi' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contacto', href: '#contacto' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="/" class="flex items-center group" aria-label="Bayona Digital Systems - Inicio">
+      <!-- Desktop: logo completo -->
+      <img
+        src="/logo.svg"
+        alt="Bayona Digital Systems"
+        class="hidden md:block h-20 w-auto max-w-[400px] object-contain"
+      />
+      <!-- Mobile: ícono de marca (favicon) -->
+      <img
+        src="/favicon.svg"
+        alt="BDS"
+        class="md:hidden h-10 w-10 object-contain"
+      />
+    </a>
+
+    <!-- Desktop nav -->
+    <div class="hidden md:flex items-center gap-7">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class="nav-link text-sm"
+          class:list={[currentPath === link.href && 'text-[var(--color-ink)]']}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="flex items-center gap-3">
+      <a href="#" data-booking-open class="hidden sm:inline-flex btn btn-primary text-sm py-2 px-4">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.9 3.41 2 2 0 0 1 3.88 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        Agenda una llamada
+      </a>
+
+      <!-- Mobile menu button -->
+      <button
+        id="menu-toggle"
+        class="md:hidden p-2 rounded-lg text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-border-soft)] transition-colors"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        <svg id="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <svg id="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden border-t border-[var(--color-border)] bg-white/98 backdrop-blur-xl"
+  >
+    <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
+      {navLinks.map(link => (
+        <a
+          href={link.href}
+          class="py-2.5 px-3 rounded-lg text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-border-soft)] transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="pt-3 border-t border-[var(--color-border)] mt-2">
+        <a href="#" data-booking-open class="btn btn-primary w-full justify-center text-sm">
+          Agenda una llamada
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  #navbar {
+    background: transparent;
+  }
+  #navbar.scrolled {
+    background: rgba(249, 250, 251, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.05);
+  }
+</style>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconMenu = document.getElementById('icon-menu');
+  const iconClose = document.getElementById('icon-close');
+
+  // Scroll effect
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // Mobile menu toggle
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = mobileMenu?.classList.contains('hidden') === false;
+    mobileMenu?.classList.toggle('hidden');
+    iconMenu?.classList.toggle('hidden', !isOpen);
+    iconClose?.classList.toggle('hidden', isOpen);
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  // Close menu on link click
+  mobileMenu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      iconMenu?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+      menuToggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>

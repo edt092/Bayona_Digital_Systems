@@ -1,0 +1,124 @@
+---
+import { featuredProjects } from '@/data/projects';
+---
+
+<section id="proyectos" class="section bg-white" aria-label="Proyectos destacados">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12 reveal">
+      <div>
+        <div class="section-badge mb-4">
+          <span class="badge badge-primary">Proyectos</span>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black">
+          Casos de éxito
+          <span class="gradient-text"> reales</span>
+        </h2>
+        <p class="text-[var(--color-muted)] mt-3 max-w-md">
+          No hablo de teoría. Aquí están los proyectos que han generado resultados reales para clientes reales.
+        </p>
+      </div>
+      <a href="#contacto" class="btn btn-outline flex-shrink-0 text-sm self-start sm:self-end">
+        Ver todos los proyectos
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Projects grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {featuredProjects.map((project, i) => (
+        <article
+          class={`card overflow-hidden group reveal delay-${(i + 1) * 100}`}
+          aria-label={`Proyecto: ${project.title}`}
+        >
+          <!-- Image / placeholder -->
+          <div class="relative h-44 overflow-hidden bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center">
+            {project.image && (
+              <img
+                src={project.image}
+                alt={`Imagen del proyecto ${project.title}`}
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+            )}
+
+            {!project.image && (
+              <>
+                <div class="absolute inset-0 opacity-10">
+                  <div class="absolute inset-0 bg-grid"></div>
+                </div>
+                <div class="relative text-center px-6">
+                  <div class="w-12 h-12 rounded-xl bg-white/15 mx-auto mb-3 flex items-center justify-center">
+                    <span class="text-white font-black text-lg font-display">
+                      {project.title.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                    </span>
+                  </div>
+                </div>
+              </>
+            )}
+
+            <!-- Hover overlay -->
+            <div class="absolute inset-0 bg-[var(--color-ink)]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <a
+                href={`/proyectos/${project.slug}`}
+                class="btn bg-white text-[var(--color-ink)] text-sm py-2 px-4 translate-y-3 group-hover:translate-y-0 transition-transform duration-300"
+              >
+                Ver caso de estudio
+              </a>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="p-6">
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              {project.tags.slice(0, 2).map(tag => (
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[var(--color-border-soft)] text-[var(--color-muted)] border border-[var(--color-border)]">
+                  {tag}
+                </span>
+              ))}
+              <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[rgb(37_99_235/0.08)] text-[var(--color-secondary)] border border-[rgb(37_99_235/0.15)]">
+                {project.industry}
+              </span>
+            </div>
+
+            <h3 class="font-bold text-[var(--color-ink)] text-lg mb-2">{project.title}</h3>
+
+            <!-- Problem / Solution compact -->
+            <div class="space-y-2 mb-5">
+              <div class="flex gap-2 text-sm">
+                <span class="text-[var(--color-subtle)] flex-shrink-0 text-xs mt-0.5">Problema:</span>
+                <span class="text-[var(--color-muted)] text-xs">{project.problem}</span>
+              </div>
+              <div class="flex gap-2 text-sm">
+                <span class="text-[var(--color-subtle)] flex-shrink-0 text-xs mt-0.5">Solución:</span>
+                <span class="text-[var(--color-muted)] text-xs">{project.solution}</span>
+              </div>
+            </div>
+
+            <!-- Result -->
+            <div class="flex items-center justify-between pt-4 border-t border-[var(--color-border)]">
+              <div>
+                <div class="text-sm text-[var(--color-muted)]">Resultado</div>
+                <div class="font-bold text-[var(--color-secondary)] text-sm font-display">{project.result}</div>
+              </div>
+              <a
+                href={`/proyectos/${project.slug}`}
+                class="flex items-center gap-1 text-xs font-semibold text-[var(--color-secondary)] hover:gap-2 transition-all duration-200"
+                aria-label={`Ver caso de estudio de ${project.title}`}
+              >
+                Ver caso
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+
+  </div>
+</section>

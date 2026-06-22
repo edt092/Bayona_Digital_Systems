@@ -1,0 +1,138 @@
+---
+const differentiators = [
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
+    title: 'Enfoque en resultados',
+    description: 'No cobro por tiempo, cobro por resultados. Cada proyecto tiene KPIs claros antes de comenzar.',
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
+    title: 'Comunicación directa',
+    description: 'Sin intermediarios ni agencias. Trabajas directamente conmigo desde el día uno.',
+  },
+  {
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+    title: 'Estrategia + Ejecución',
+    description: 'No solo diseño estrategias, las implemento. Del plan a los resultados en el menor tiempo posible.',
+  },
+];
+---
+
+<section id="sobre-mi" class="section bg-[var(--color-surface)]" aria-label="Sobre mí">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left: Photo placeholder -->
+      <div class="reveal">
+        <div class="relative">
+          <!-- Main image frame -->
+          <div
+            class="relative rounded-2xl overflow-hidden aspect-[4/5] max-w-md"
+            style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);"
+          >
+            <!-- Profile photo -->
+            <img
+              src="/edwin-bayona-picture-profile.png"
+              alt="Edwin Bayona — Web Developer & Digital Marketer"
+              class="absolute inset-0 w-full h-full object-cover object-top"
+            />
+
+            <!-- Bottom gradient overlay -->
+            <div
+              class="absolute inset-0 flex items-end p-8"
+              style="background: linear-gradient(to top, rgb(0 0 0 / 0.6) 0%, transparent 55%);"
+            >
+              <div class="text-white">
+                <div class="font-black text-2xl font-display mb-1">Bayona Digital</div>
+                <div class="text-white/70 text-sm">Web Developer &amp; Digital Marketer</div>
+              </div>
+            </div>
+
+            <!-- Stats overlay -->
+            <div class="absolute top-6 right-6 card py-3 px-4 text-center shadow-lg">
+              <div class="text-2xl font-black text-[var(--color-primary)] font-display">5+</div>
+              <div class="text-xs text-[var(--color-muted)]">años de experiencia</div>
+            </div>
+          </div>
+
+          <!-- Decorative element -->
+          <div
+            class="absolute -top-4 -left-4 w-20 h-20 rounded-xl"
+            style="background: rgb(6 182 212 / 0.08); border: 1px solid rgb(6 182 212 / 0.2);"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Right: Content -->
+      <div class="reveal delay-200">
+        <div class="section-badge mb-4">
+          <span class="badge badge-accent">Sobre mí</span>
+        </div>
+
+        <h2 class="text-3xl md:text-4xl font-black mb-6">
+          No soy solo un desarrollador.
+          <span class="gradient-text block mt-1">Soy tu socio de crecimiento.</span>
+        </h2>
+
+        <div class="prose-portfolio space-y-4 mb-8">
+          <p class="text-[var(--color-muted)] leading-relaxed">
+            Llevo más de 5 años ayudando a empresas y emprendedores a construir su presencia digital de manera estratégica. Mi enfoque combina <strong class="text-[var(--color-ink)]">desarrollo técnico de alto nivel</strong> con una comprensión profunda del marketing digital.
+          </p>
+          <p class="text-[var(--color-muted)] leading-relaxed">
+            Entiendo que para ti un sitio web no es un proyecto de arte: es una <strong class="text-[var(--color-ink)]">herramienta de ventas</strong>. Por eso cada decisión que tomo está orientada a una sola cosa: <strong class="text-[var(--color-ink)]">hacer crecer tu negocio</strong>.
+          </p>
+        </div>
+
+        <!-- Differentiators -->
+        <div class="space-y-4 mb-8">
+          {differentiators.map((item) => (
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 rounded-xl bg-[rgb(37_99_235/0.08)] border border-[rgb(37_99_235/0.12)] flex items-center justify-center flex-shrink-0 text-[var(--color-secondary)]">
+                <div class="w-4.5 h-4.5" set:html={item.icon}></div>
+              </div>
+              <div>
+                <h3 class="font-bold text-[var(--color-ink)] text-sm mb-0.5">{item.title}</h3>
+                <p class="text-sm text-[var(--color-muted)]">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- CTA -->
+        <div class="flex flex-wrap gap-3">
+          <a href="#contacto" class="btn btn-primary">
+            Trabajemos juntos
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/edwin-bayona-dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/>
+              <circle cx="4" cy="4" r="2"/>
+            </svg>
+            LinkedIn
+          </a>
+          <a
+            href="https://github.com/edt092"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -1,0 +1,87 @@
+---
+import Layout from '@/components/layout/Layout.astro';
+
+// Will be populated with getCollection('blog') when content is added
+const posts: any[] = [];
+
+const categories = ['Todos', 'SEO', 'Desarrollo Web', 'Marketing Digital', 'CRO'];
+---
+
+<Layout
+  title="Blog — Estrategias de Desarrollo Web y Marketing Digital"
+  description="Artículos prácticos sobre SEO, desarrollo web y marketing digital. Estrategias basadas en proyectos reales con resultados medibles."
+>
+  <!-- Header -->
+  <section class="pt-32 pb-16 bg-[var(--color-surface)] border-b border-[var(--color-border)]">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="section-badge mb-4">
+        <span class="badge badge-accent">Blog</span>
+      </div>
+      <h1 class="text-4xl md:text-5xl font-black mb-4">
+        Estrategias que
+        <span class="gradient-text"> generan resultados</span>
+      </h1>
+      <p class="text-lg text-[var(--color-muted)] max-w-2xl">
+        Artículos prácticos basados en proyectos reales. Sin relleno, sin teoría sin aplicación.
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog content -->
+  <section class="section">
+    <div class="max-w-4xl mx-auto px-6">
+
+      <!-- Categories filter -->
+      <div class="flex flex-wrap gap-2 mb-10">
+        {categories.map((cat, i) => (
+          <button
+            class={`badge text-sm cursor-pointer hover:scale-105 transition-transform ${i === 0 ? 'badge-primary' : 'bg-[var(--color-border-soft)] text-[var(--color-muted)] border border-[var(--color-border)] hover:border-[var(--color-secondary)] hover:text-[var(--color-secondary)]'}`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {posts.length === 0 ? (
+        <!-- Empty state -->
+        <div class="text-center py-20">
+          <div class="w-16 h-16 rounded-2xl bg-[var(--color-border-soft)] flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-[var(--color-subtle)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
+            </svg>
+          </div>
+          <h3 class="font-bold text-[var(--color-ink)] mb-2">Contenido próximamente</h3>
+          <p class="text-[var(--color-muted)] text-sm max-w-xs mx-auto">
+            Estoy preparando los primeros artículos del blog. Vuelve pronto.
+          </p>
+          <a href="/" class="btn btn-primary mt-6 text-sm">
+            ← Volver al inicio
+          </a>
+        </div>
+      ) : (
+        <div class="space-y-6">
+          {posts.map(post => (
+            <article class="card p-6 hover:border-[var(--color-secondary)]/30">
+              <a href={`/blog/${post.slug}`} class="block">
+                <div class="flex gap-4 items-start">
+                  <div class="flex-1">
+                    <span class="badge badge-accent text-[10px] mb-3 inline-flex">{post.data.category}</span>
+                    <h2 class="font-bold text-lg text-[var(--color-ink)] mb-2 hover:text-[var(--color-secondary)] transition-colors">
+                      {post.data.title}
+                    </h2>
+                    <p class="text-sm text-[var(--color-muted)] mb-3">{post.data.description}</p>
+                    <div class="flex items-center gap-3 text-xs text-[var(--color-subtle)]">
+                      <time>{post.data.pubDate.toLocaleDateString('es-ES')}</time>
+                      <span>·</span>
+                      <span>{post.data.readTime}</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

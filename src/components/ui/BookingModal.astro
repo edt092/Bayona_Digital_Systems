@@ -1,0 +1,671 @@
+---
+/*
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  SETUP RÁPIDO — 2 servicios gratuitos                        ║
+  ╠══════════════════════════════════════════════════════════════╣
+  ║                                                              ║
+  ║  1. SUPABASE (supabase.com → gratis)                        ║
+  ║     Crea un proyecto y ejecuta en SQL Editor:                ║
+  ║                                                              ║
+  ║     CREATE TABLE bookings (                                  ║
+  ║       id UUID DEFAULT gen_random_uuid() PRIMARY KEY,         ║
+  ║       date DATE NOT NULL,                                    ║
+  ║       time_slot TIME NOT NULL,                               ║
+  ║       name TEXT NOT NULL,                                    ║
+  ║       email TEXT NOT NULL,                                   ║
+  ║       phone TEXT NOT NULL,                                   ║
+  ║       country TEXT NOT NULL,                                 ║
+  ║       notes TEXT,                                            ║
+  ║       created_at TIMESTAMPTZ DEFAULT NOW(),                  ║
+  ║       UNIQUE(date, time_slot)                                ║
+  ║     );                                                       ║
+  ║     ALTER TABLE bookings ENABLE ROW LEVEL SECURITY;          ║
+  ║     CREATE POLICY "r" ON bookings FOR SELECT USING (true);   ║
+  ║     CREATE POLICY "i" ON bookings FOR INSERT                 ║
+  ║       WITH CHECK (true);                                     ║
+  ║                                                              ║
+  ║  2. EMAILJS (emailjs.com → gratis 200 mails/mes)            ║
+  ║     - Conecta tu Gmail                                       ║
+  ║     - Crea template con: {{client_name}}, {{client_email}},  ║
+  ║       {{client_phone}}, {{client_country}},                  ║
+  ║       {{booking_date}}, {{booking_time}}, {{notes}}          ║
+  ║     - To email: info@bayonadigitalsystems.com                ║
+  ║                                                              ║
+  ║  3. Agrega a tu .env:                                        ║
+  ║     PUBLIC_SUPABASE_URL=https://xxx.supabase.co              ║
+  ║     PUBLIC_SUPABASE_ANON_KEY=eyJ...                         ║
+  ║     PUBLIC_EMAILJS_SERVICE_ID=service_xxx                    ║
+  ║     PUBLIC_EMAILJS_TEMPLATE_ID=template_xxx                  ║
+  ║     PUBLIC_EMAILJS_PUBLIC_KEY=xxx                            ║
+  ╚══════════════════════════════════════════════════════════════╝
+*/
+---
+
+<!-- ── Overlay ── -->
+<div
+  id="bk-overlay"
+  class="fixed inset-0 z-[200] hidden items-center justify-center p-4"
+  style="background: rgba(2,14,52,0.65); backdrop-filter: blur(6px);"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Agendar llamada"
+>
+  <div
+    id="bk-widget"
+    class="relative w-full max-w-[520px] rounded-2xl overflow-hidden shadow-2xl"
+    style="background: var(--color-surface, #fff); max-height: 92vh; overflow-y: auto; border: 1px solid var(--color-border, #e5e7eb);"
+  >
+
+    <!-- ── Header ── -->
+    <div class="sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b"
+      style="background: var(--color-surface, #fff); border-color: var(--color-border, #e5e7eb);">
+      <div>
+        <h2 class="font-black text-lg" style="color: var(--color-ink, #111);">Agenda tu llamada</h2>
+        <p class="text-xs mt-0.5" style="color: var(--color-muted, #6b7280);">
+          Sesión estratégica gratuita · 20 min · Junio 2026
+        </p>
+      </div>
+      <button id="bk-close" class="w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+        style="color: var(--color-muted); hover:background: var(--color-border-soft);"
+        aria-label="Cerrar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- ── Steps indicator ── -->
+    <div id="bk-steps" class="px-6 pt-4 pb-1">
+      <div class="flex items-center gap-2">
+        <div id="sd1" class="bk-dot bk-dot-active">1</div>
+        <div class="bk-line"></div>
+        <div id="sd2" class="bk-dot">2</div>
+        <div class="bk-line"></div>
+        <div id="sd3" class="bk-dot">3</div>
+      </div>
+      <div class="flex justify-between mt-1.5">
+        <span class="text-[10px] font-semibold uppercase tracking-wider" style="color:var(--color-subtle,#9ca3af)">Fecha</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider" style="color:var(--color-subtle,#9ca3af)">Horario</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider" style="color:var(--color-subtle,#9ca3af)">Tus datos</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- STEP 1 — Calendario                   -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="bk-step1" class="px-6 py-4">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-black text-base" style="color:var(--color-ink)">
+          <svg class="inline w-4 h-4 mr-1 -mt-0.5 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Junio 2026
+        </h3>
+        <span class="text-[11px] px-2 py-1 rounded-full font-semibold"
+          style="background: rgb(37 99 235 / 0.08); color: var(--color-secondary);">
+          Selecciona un día
+        </span>
+      </div>
+
+      <!-- Day names -->
+      <div class="grid grid-cols-7 gap-1 mb-1.5">
+        {['Lu','Ma','Mi','Ju','Vi','Sá','Do'].map(d => (
+          <div class="text-center text-[11px] font-bold py-1" style="color:var(--color-subtle,#9ca3af)">{d}</div>
+        ))}
+      </div>
+
+      <!-- Calendar grid — populated by JS -->
+      <div id="bk-calendar" class="grid grid-cols-7 gap-1"></div>
+
+      <!-- Legend -->
+      <div class="flex items-center gap-4 mt-4 pt-3 border-t" style="border-color:var(--color-border)">
+        <div class="flex items-center gap-1.5 text-[11px]" style="color:var(--color-muted)">
+          <span class="w-3 h-3 rounded-full inline-block" style="background:var(--color-secondary)"></span>
+          Disponible
+        </div>
+        <div class="flex items-center gap-1.5 text-[11px]" style="color:var(--color-muted)">
+          <span class="w-3 h-3 rounded-full inline-block" style="background:var(--color-border)"></span>
+          No disponible
+        </div>
+        <div class="flex items-center gap-1.5 text-[11px] ml-auto font-semibold" style="color:var(--color-muted)">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Horario: 08:00 – 18:00
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- STEP 2 — Horarios                     -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="bk-step2" class="px-6 py-4 hidden">
+      <div class="flex items-center gap-3 mb-4">
+        <button id="bk-back1" class="w-7 h-7 rounded-full flex items-center justify-center transition-colors"
+          style="border:1px solid var(--color-border); color:var(--color-muted)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div>
+          <h3 class="font-black text-base" style="color:var(--color-ink)">Elige el horario</h3>
+          <p id="bk-date-label" class="text-xs" style="color:var(--color-muted)"></p>
+        </div>
+        <div id="bk-loading" class="ml-auto hidden">
+          <div class="w-4 h-4 rounded-full border-2 border-t-transparent animate-spin" style="border-color:var(--color-secondary);border-top-color:transparent"></div>
+        </div>
+      </div>
+
+      <div id="bk-slots" class="grid grid-cols-3 sm:grid-cols-4 gap-2" style="max-height:300px;overflow-y:auto;padding-right:2px"></div>
+
+      <p class="text-[11px] mt-3 flex items-center gap-1" style="color:var(--color-muted)">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Cada llamada dura máximo 20 minutos. Hora Ecuador (GMT-5).
+      </p>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- STEP 3 — Formulario                   -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="bk-step3" class="px-6 py-4 hidden">
+      <div class="flex items-center gap-3 mb-4">
+        <button id="bk-back2" class="w-7 h-7 rounded-full flex items-center justify-center transition-colors"
+          style="border:1px solid var(--color-border); color:var(--color-muted)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div>
+          <h3 class="font-black text-base" style="color:var(--color-ink)">Tus datos</h3>
+          <p id="bk-datetime-label" class="text-xs font-semibold" style="color:var(--color-secondary)"></p>
+        </div>
+      </div>
+
+      <form id="bk-form" class="space-y-3" novalidate>
+
+        <div>
+          <label class="bk-label">Nombre completo *</label>
+          <input id="f-name" type="text" required placeholder="Ej: María García"
+            class="bk-input" autocomplete="name" />
+        </div>
+
+        <div>
+          <label class="bk-label">País de residencia *</label>
+          <select id="f-country" required class="bk-input">
+            <option value="">— Selecciona tu país —</option>
+            <optgroup label="Latinoamérica">
+              <option>Ecuador</option>
+              <option>Colombia</option>
+              <option>México</option>
+              <option>Argentina</option>
+              <option>Chile</option>
+              <option>Perú</option>
+              <option>Venezuela</option>
+              <option>Bolivia</option>
+              <option>Paraguay</option>
+              <option>Uruguay</option>
+              <option>Brasil</option>
+              <option>Costa Rica</option>
+              <option>Panamá</option>
+              <option>Guatemala</option>
+              <option>Honduras</option>
+              <option>El Salvador</option>
+              <option>Nicaragua</option>
+              <option>República Dominicana</option>
+              <option>Cuba</option>
+              <option>Puerto Rico</option>
+            </optgroup>
+            <optgroup label="América del Norte">
+              <option>Estados Unidos</option>
+              <option>Canadá</option>
+            </optgroup>
+            <optgroup label="Europa">
+              <option>España</option>
+              <option>Portugal</option>
+              <option>Reino Unido</option>
+              <option>Alemania</option>
+              <option>Francia</option>
+              <option>Italia</option>
+            </optgroup>
+            <option value="Otro">Otro país</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="bk-label">Teléfono / WhatsApp *</label>
+            <input id="f-phone" type="tel" required placeholder="+593 99 999 9999"
+              class="bk-input" autocomplete="tel" />
+          </div>
+          <div>
+            <label class="bk-label">Correo electrónico *</label>
+            <input id="f-email" type="email" required placeholder="tu@correo.com"
+              class="bk-input" autocomplete="email" />
+          </div>
+        </div>
+
+        <div>
+          <label class="bk-label">¿De qué quieres hablar? <span style="font-weight:400;opacity:0.6">(opcional)</span></label>
+          <textarea id="f-notes" rows="2" placeholder="Cuéntame brevemente sobre tu proyecto o necesidad..."
+            class="bk-input resize-none"></textarea>
+        </div>
+
+        <!-- Error message -->
+        <p id="bk-error" class="hidden text-xs px-3 py-2 rounded-lg"
+          style="background:rgb(239 68 68/0.08); color:#dc2626; border:1px solid rgb(239 68 68/0.2)"></p>
+
+        <button type="submit" id="bk-submit"
+          class="w-full flex items-center justify-center gap-2 rounded-xl py-3 px-6 font-bold text-sm transition-all duration-200"
+          style="background:var(--color-secondary); color:#fff;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Confirmar cita
+        </button>
+
+        <p class="text-[10px] text-center" style="color:var(--color-subtle)">
+          🔒 Tus datos son confidenciales y solo se usarán para coordinar la llamada.
+        </p>
+      </form>
+    </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- STEP 4 — Confirmación                 -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="bk-success" class="hidden px-6 py-12 text-center">
+      <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-5"
+        style="background:rgb(16 185 129/0.1); border:2px solid rgb(16 185 129/0.3);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" class="text-green-500">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h3 class="text-xl font-black mb-2" style="color:var(--color-ink)">¡Cita confirmada!</h3>
+      <p id="bk-success-detail" class="text-sm mb-2 font-semibold" style="color:var(--color-secondary)"></p>
+      <p class="text-xs mb-6 leading-relaxed" style="color:var(--color-muted)">
+        Te llegará un correo de confirmación.<br/>
+        Edwin te contactará antes de la llamada para coordinar los detalles.
+      </p>
+      <button id="bk-close-success"
+        class="inline-flex items-center gap-2 rounded-xl py-2.5 px-5 text-sm font-semibold transition-colors"
+        style="border:1.5px solid var(--color-border); color:var(--color-ink)">
+        Cerrar
+      </button>
+    </div>
+
+  </div><!-- /widget -->
+</div><!-- /overlay -->
+
+
+<style is:global>
+  /* ── Dots & Lines ── */
+  .bk-dot {
+    width: 24px; height: 24px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; flex-shrink: 0;
+    background: var(--color-border, #e5e7eb);
+    color: var(--color-subtle, #9ca3af);
+    transition: all .25s;
+  }
+  .bk-dot-active { background: var(--color-secondary, #2563eb); color: #fff; }
+  .bk-dot-done   { background: #10b981; color: #fff; }
+  .bk-line { flex: 1; height: 2px; background: var(--color-border, #e5e7eb); border-radius: 1px; }
+
+  /* ── Calendar days ── */
+  .bk-day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; font-size: 13px; font-weight: 500;
+    transition: all .15s; cursor: default;
+  }
+  .bk-day-avail {
+    cursor: pointer;
+    color: var(--color-secondary, #2563eb);
+    background: rgb(37 99 235 / 0.06);
+    border: 1px solid rgb(37 99 235 / 0.15);
+  }
+  .bk-day-avail:hover, .bk-day-avail.bk-day-sel {
+    background: var(--color-secondary, #2563eb);
+    color: #fff; border-color: var(--color-secondary, #2563eb);
+    transform: scale(1.05); box-shadow: 0 4px 12px rgb(37 99 235 / 0.25);
+  }
+  .bk-day-avail.bk-today { font-weight: 900; }
+  .bk-day-past  { color: var(--color-border, #e5e7eb); }
+  .bk-day-empty { }
+
+  /* ── Time slots ── */
+  .bk-slot {
+    padding: 8px 4px; border-radius: 8px; text-align: center;
+    font-size: 11px; font-weight: 700; transition: all .15s;
+    cursor: pointer; line-height: 1.4;
+    border: 1px solid var(--color-border, #e5e7eb);
+    color: var(--color-ink, #111);
+  }
+  .bk-slot:hover {
+    background: var(--color-secondary, #2563eb);
+    color: #fff; border-color: var(--color-secondary, #2563eb);
+    transform: scale(1.03);
+  }
+  .bk-slot.bk-slot-sel {
+    background: var(--color-secondary, #2563eb);
+    color: #fff; border-color: var(--color-secondary, #2563eb);
+  }
+  .bk-slot.bk-slot-booked {
+    background: var(--color-border-soft, #f9fafb);
+    color: var(--color-border, #e5e7eb);
+    cursor: not-allowed; text-decoration: line-through;
+  }
+
+  /* ── Form inputs ── */
+  .bk-label {
+    display: block; font-size: 11px; font-weight: 700;
+    margin-bottom: 4px; color: var(--color-muted, #6b7280);
+    text-transform: uppercase; letter-spacing: .05em;
+  }
+  .bk-input {
+    width: 100%; padding: 9px 12px; border-radius: 10px;
+    font-size: 13px; outline: none; transition: all .15s;
+    border: 1.5px solid var(--color-border, #e5e7eb);
+    background: var(--color-surface, #fff);
+    color: var(--color-ink, #111);
+  }
+  .bk-input:focus {
+    border-color: var(--color-secondary, #2563eb);
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+  }
+  .bk-input::placeholder { color: var(--color-subtle, #9ca3af); }
+
+  /* ── Overlay show ── */
+  #bk-overlay.bk-open { display: flex !important; }
+
+  /* ── Submit loading ── */
+  #bk-submit.bk-loading { opacity: .7; pointer-events: none; }
+</style>
+
+
+<script>
+  /* ── Config — leídas de .env ── */
+  const SB_URL  = (import.meta.env.PUBLIC_SUPABASE_URL  ?? '').trim();
+  const SB_KEY  = (import.meta.env.PUBLIC_SUPABASE_ANON_KEY ?? '').trim();
+  const EJS_SVC = (import.meta.env.PUBLIC_EMAILJS_SERVICE_ID  ?? '').trim();
+  const EJS_TPL = (import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? '').trim();
+  const EJS_KEY = (import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY  ?? '').trim();
+
+  /* ── Estado ── */
+  let selDate = '';
+  let selSlot: { start: string; end: string } | null = null;
+
+  /* ── DOM ── */
+  const overlay    = document.getElementById('bk-overlay')!;
+  const step1El    = document.getElementById('bk-step1')!;
+  const step2El    = document.getElementById('bk-step2')!;
+  const step3El    = document.getElementById('bk-step3')!;
+  const successEl  = document.getElementById('bk-success')!;
+  const stepsEl    = document.getElementById('bk-steps')!;
+  const errorEl    = document.getElementById('bk-error')!;
+  const submitBtn  = document.getElementById('bk-submit') as HTMLButtonElement;
+  const loadingEl  = document.getElementById('bk-loading')!;
+
+  /* ═══════════════════════════════════════════════ */
+  /*  HELPERS                                        */
+  /* ═══════════════════════════════════════════════ */
+
+  function goStep(n: number) {
+    [step1El, step2El, step3El, successEl, stepsEl].forEach(el => el?.classList.remove('hidden'));
+    step1El.classList.toggle('hidden', n !== 1);
+    step2El.classList.toggle('hidden', n !== 2);
+    step3El.classList.toggle('hidden', n !== 3);
+    successEl.classList.toggle('hidden', n !== 4);
+    stepsEl.classList.toggle('hidden', n === 4);
+
+    [1, 2, 3].forEach(i => {
+      const dot = document.getElementById(`sd${i}`)!;
+      dot.className = 'bk-dot';
+      if (i < n)       dot.classList.add('bk-dot-done');
+      else if (i === n) dot.classList.add('bk-dot-active');
+    });
+  }
+
+  function openModal() {
+    overlay.classList.add('bk-open');
+    goStep(1);
+    renderCalendar();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    overlay.classList.remove('bk-open');
+    document.body.style.overflow = '';
+    selDate = '';
+    selSlot = null;
+    setTimeout(() => goStep(1), 300);
+  }
+
+  function fmtDate(dateStr: string) {
+    const d = new Date(dateStr + 'T12:00:00');
+    return d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function showError(msg: string) {
+    errorEl.textContent = msg;
+    errorEl.classList.remove('hidden');
+  }
+
+  function hideError() {
+    errorEl.classList.add('hidden');
+    errorEl.textContent = '';
+  }
+
+  /* ═══════════════════════════════════════════════ */
+  /*  CALENDARIO — Junio 2026                        */
+  /* ═══════════════════════════════════════════════ */
+
+  function renderCalendar() {
+    const grid   = document.getElementById('bk-calendar')!;
+    const year   = 2026, month = 5; // June = 5
+    const now    = new Date();
+    const today  = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const first  = new Date(year, month, 1);
+    const days   = new Date(year, month + 1, 0).getDate(); // 30
+
+    // Monday-based offset: (getDay()+6)%7  (Sun=0 → offset=6, Mon=1 → offset=0)
+    const offset = (first.getDay() + 6) % 7;
+
+    let html = '';
+    for (let i = 0; i < offset; i++) html += `<div class="bk-day bk-day-empty"></div>`;
+
+    for (let d = 1; d <= days; d++) {
+      const date    = new Date(year, month, d);
+      const dateStr = `2026-06-${String(d).padStart(2,'0')}`;
+      const isPast  = date < today;
+      const isToday = date.getTime() === today.getTime();
+
+      if (isPast) {
+        html += `<div class="bk-day bk-day-past" title="Fecha pasada">${d}</div>`;
+      } else {
+        html += `<div class="bk-day bk-day-avail${isToday ? ' bk-today' : ''}" data-date="${dateStr}" title="${fmtDate(dateStr)}">${d}</div>`;
+      }
+    }
+
+    grid.innerHTML = html;
+    grid.querySelectorAll('.bk-day-avail').forEach(el => {
+      el.addEventListener('click', () => onDateClick(el as HTMLElement));
+    });
+  }
+
+  async function onDateClick(el: HTMLElement) {
+    const date = el.dataset.date!;
+    selDate = date;
+    selSlot = null;
+
+    document.querySelectorAll('.bk-day-avail').forEach(d => d.classList.remove('bk-day-sel'));
+    el.classList.add('bk-day-sel');
+
+    goStep(2);
+    document.getElementById('bk-date-label')!.textContent = fmtDate(date);
+
+    loadingEl.classList.remove('hidden');
+    const booked = await fetchBooked(date);
+    loadingEl.classList.add('hidden');
+
+    renderSlots(booked);
+  }
+
+  /* ═══════════════════════════════════════════════ */
+  /*  SUPABASE — Fetch booked slots                  */
+  /* ═══════════════════════════════════════════════ */
+
+  async function fetchBooked(date: string): Promise<string[]> {
+    if (!SB_URL || !SB_KEY) return [];
+    try {
+      const res = await fetch(
+        `${SB_URL}/rest/v1/bookings?date=eq.${date}&select=time_slot`,
+        { headers: { apikey: SB_KEY, Authorization: `Bearer ${SB_KEY}` } }
+      );
+      if (!res.ok) return [];
+      const rows: { time_slot: string }[] = await res.json();
+      return rows.map(r => r.time_slot.substring(0, 5));
+    } catch { return []; }
+  }
+
+  /* ═══════════════════════════════════════════════ */
+  /*  HORARIOS — 08:00 → 18:00 cada 20 min          */
+  /* ═══════════════════════════════════════════════ */
+
+  function allSlots() {
+    const slots: { start: string; end: string }[] = [];
+    let h = 8, m = 0;
+    while (h < 18) {
+      const sh = String(h).padStart(2,'0'), sm = String(m).padStart(2,'0');
+      let eh = h, em = m + 20;
+      if (em >= 60) { eh++; em -= 60; }
+      const ehS = String(eh).padStart(2,'0'), emS = String(em).padStart(2,'0');
+      slots.push({ start: `${sh}:${sm}`, end: `${ehS}:${emS}` });
+      m += 20;
+      if (m >= 60) { h++; m -= 60; }
+    }
+    return slots; // 30 slots
+  }
+
+  function renderSlots(booked: string[]) {
+    const container = document.getElementById('bk-slots')!;
+    const now       = new Date();
+    const isToday   = selDate === `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+
+    container.innerHTML = allSlots().map(s => {
+      const isBooked = booked.includes(s.start);
+      const isPastNow = isToday && (() => {
+        const [sh, sm] = s.start.split(':').map(Number);
+        return sh * 60 + sm <= now.getHours() * 60 + now.getMinutes();
+      })();
+
+      const disabled = isBooked || isPastNow;
+      return `<div class="bk-slot${disabled ? ' bk-slot-booked' : ''}"
+        ${!disabled ? `data-start="${s.start}" data-end="${s.end}"` : ''}
+        title="${disabled ? 'No disponible' : `${s.start} – ${s.end}`}">
+        <div>${s.start}</div>
+        <div style="font-size:9px;opacity:.65">${s.end}</div>
+      </div>`;
+    }).join('');
+
+    container.querySelectorAll('.bk-slot:not(.bk-slot-booked)').forEach(el => {
+      el.addEventListener('click', () => {
+        const start = (el as HTMLElement).dataset.start!;
+        const end   = (el as HTMLElement).dataset.end!;
+        selSlot = { start, end };
+        container.querySelectorAll('.bk-slot').forEach(s => s.classList.remove('bk-slot-sel'));
+        el.classList.add('bk-slot-sel');
+        setTimeout(() => {
+          goStep(3);
+          document.getElementById('bk-datetime-label')!.textContent =
+            `${fmtDate(selDate)} · ${start} – ${end}`;
+        }, 180);
+      });
+    });
+  }
+
+  /* ═══════════════════════════════════════════════ */
+  /*  FORM SUBMIT                                    */
+  /* ═══════════════════════════════════════════════ */
+
+  document.getElementById('bk-form')!.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    hideError();
+
+    const name    = (document.getElementById('f-name')    as HTMLInputElement).value.trim();
+    const country = (document.getElementById('f-country') as HTMLSelectElement).value;
+    const phone   = (document.getElementById('f-phone')   as HTMLInputElement).value.trim();
+    const email   = (document.getElementById('f-email')   as HTMLInputElement).value.trim();
+    const notes   = (document.getElementById('f-notes')   as HTMLTextAreaElement).value.trim();
+
+    if (!name || !country || !phone || !email) {
+      showError('Por favor completa todos los campos obligatorios.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError('Ingresa un correo electrónico válido.');
+      return;
+    }
+
+    submitBtn.classList.add('bk-loading');
+    submitBtn.textContent = 'Confirmando cita…';
+
+    try {
+      /* 1 — Guardar en Supabase */
+      if (SB_URL && SB_KEY) {
+        const res = await fetch(`${SB_URL}/rest/v1/bookings`, {
+          method: 'POST',
+          headers: {
+            apikey: SB_KEY,
+            Authorization: `Bearer ${SB_KEY}`,
+            'Content-Type': 'application/json',
+            Prefer: 'return=minimal',
+          },
+          body: JSON.stringify({
+            date: selDate,
+            time_slot: selSlot!.start + ':00',
+            name, email, phone, country, notes,
+          }),
+        });
+        if (!res.ok) {
+          if (res.status === 409) throw new Error('Este horario acaba de ser reservado por otro cliente. Por favor elige otro.');
+          const err = await res.json().catch(() => ({}));
+          throw new Error((err as any).message ?? 'Error al guardar la cita. Intenta de nuevo.');
+        }
+      }
+
+      /* 2 — Enviar email vía EmailJS */
+      if (EJS_SVC && EJS_TPL && EJS_KEY && (window as any).emailjs) {
+        await (window as any).emailjs.send(EJS_SVC, EJS_TPL, {
+          to_email:       'info@bayonadigitalsystems.com',
+          client_name:    name,
+          client_email:   email,
+          client_phone:   phone,
+          client_country: country,
+          booking_date:   fmtDate(selDate),
+          booking_time:   `${selSlot!.start} – ${selSlot!.end}`,
+          notes:          notes || 'Sin notas adicionales',
+        }, EJS_KEY);
+      }
+
+      /* 3 — Éxito */
+      document.getElementById('bk-success-detail')!.textContent =
+        `${fmtDate(selDate)} · ${selSlot!.start} – ${selSlot!.end}`;
+      goStep(4);
+
+    } catch (err: any) {
+      showError(err.message ?? 'Ocurrió un error inesperado. Por favor intenta de nuevo.');
+    } finally {
+      submitBtn.classList.remove('bk-loading');
+      submitBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Confirmar cita`;
+    }
+  });
+
+  /* ═══════════════════════════════════════════════ */
+  /*  ABRIR / CERRAR                                 */
+  /* ═══════════════════════════════════════════════ */
+
+  document.querySelectorAll('[data-booking-open]').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+  });
+
+  document.getElementById('bk-close')!.addEventListener('click', closeModal);
+  document.getElementById('bk-close-success')!.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+
+  document.getElementById('bk-back1')!.addEventListener('click', () => goStep(1));
+  document.getElementById('bk-back2')!.addEventListener('click', () => goStep(2));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('bk-open')) closeModal();
+  });
+</script>
