@@ -19,6 +19,7 @@
     "typescript": "^5.0.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp", "@img/sharp-win32-x64"]
+    "onlyBuiltDependencies": ["esbuild", "sharp", "@img/sharp-win32-x64"],
+    "approvedBuilds": ["esbuild", "sharp", "@img/sharp-win32-x64"]
   }
 }

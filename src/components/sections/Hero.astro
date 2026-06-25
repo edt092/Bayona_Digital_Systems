@@ -2,36 +2,80 @@
 const stats = [
   { value: 48, suffix: '+', label: 'Proyectos entregados' },
   { value: 97, suffix: '%', label: 'Clientes satisfechos' },
-  { value: 5, suffix: '+', label: 'Años de experiencia' },
+  { value: 5,  suffix: '+', label: 'Años de experiencia' },
 ];
+
+const stack = ['Web Scraping', 'Python', 'Automatización', 'Next.js', 'Node.js'];
 ---
 
 <section
   id="inicio"
-  class="relative min-h-screen flex items-center pt-16 overflow-hidden"
+  class="relative min-h-screen flex items-center pt-16 overflow-hidden bg-[#080808]"
   aria-label="Inicio"
 >
-  <!-- Background -->
-  <div class="absolute inset-0 bg-grid"></div>
+  <!-- Subtle grid -->
+  <div class="absolute inset-0 bg-grid opacity-60 pointer-events-none" aria-hidden="true"></div>
 
-  <!-- Gradient blobs -->
+  <!-- ═══ Orbital arc system ═══ -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <svg
+      class="absolute inset-0 w-full h-full"
+      viewBox="0 0 1440 900"
+      preserveAspectRatio="xMidYMid slice"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <!-- Outer tilt-1 orbit -->
+      <ellipse
+        class="arc-orbit-1"
+        cx="720" cy="450" rx="700" ry="300"
+        stroke="rgba(200,200,200,0.22)" stroke-width="1.2"
+      />
+      <!-- Outer tilt-2 orbit (same speed, different phase) -->
+      <ellipse
+        class="arc-orbit-2"
+        cx="720" cy="450" rx="700" ry="300"
+        stroke="rgba(200,200,200,0.16)" stroke-width="1"
+      />
+      <!-- Mid-ring counter-clockwise -->
+      <ellipse
+        class="arc-orbit-3"
+        cx="720" cy="450" rx="500" ry="210"
+        stroke="rgba(200,200,200,0.20)" stroke-width="1"
+      />
+      <!-- Inner ring -->
+      <ellipse
+        class="arc-orbit-4"
+        cx="720" cy="450" rx="300" ry="125"
+        stroke="rgba(200,200,200,0.24)" stroke-width="0.9"
+      />
+      <!-- Sinuous curves that wave vertically -->
+      <path
+        class="arc-wave-1"
+        d="M-100,620 Q240,180 720,500 Q1200,820 1540,310"
+        stroke="rgba(200,200,200,0.20)" stroke-width="1.2"
+      />
+      <path
+        class="arc-wave-2"
+        d="M-100,280 Q240,720 720,380 Q1200,80 1540,590"
+        stroke="rgba(200,200,200,0.15)" stroke-width="1"
+      />
+    </svg>
+  </div>
+
+  <!-- Radial center glow -->
   <div
-    class="absolute top-1/4 -left-32 w-[600px] h-[600px] rounded-full opacity-30"
-    style="background: radial-gradient(circle, rgb(37 99 235 / 0.12) 0%, transparent 70%);"
+    class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(80,80,80,0.04) 0%, transparent 70%);"
     aria-hidden="true"
   ></div>
-  <div
-    class="absolute bottom-1/4 -right-32 w-[500px] h-[500px] rounded-full opacity-20"
-    style="background: radial-gradient(circle, rgb(6 182 212 / 0.15) 0%, transparent 70%);"
-    aria-hidden="true"
-  ></div>
 
-  <div class="relative max-w-7xl mx-auto px-6 w-full py-20 lg:py-28">
+  <div class="relative max-w-7xl mx-auto px-6 w-full py-24 lg:py-32">
     <div class="grid lg:grid-cols-2 gap-16 items-center">
 
-      <!-- Left: Content -->
+      <!-- ── Left: Content ── -->
       <div>
-        <!-- Badge -->
+        <!-- Status badge -->
         <div class="section-badge animate-fade-up">
           <span class="badge badge-accent">
             <span class="dot-live"></span>
@@ -39,133 +83,124 @@ const stats = [
           </span>
         </div>
 
-        <!-- Heading -->
-        <h1 class="text-4xl md:text-5xl xl:text-6xl font-black leading-[1.1] mb-6 animate-fade-up delay-100">
-          Desarrollo sitios web que
-          <span class="gradient-text block mt-1">convierten visitantes</span>
-          en clientes.
+        <!-- Main headline — mirrors LinkedIn cover tagline -->
+        <h1 class="text-[2.75rem] md:text-[3.5rem] xl:text-[4.25rem] font-bold leading-[1.05] mb-6 animate-fade-up delay-100 tracking-tight">
+          <span class="neon-yellow">Deploying ideas,</span><br/>
+          <span class="gradient-text">debugging reality.</span>
         </h1>
 
-        <!-- Subheading -->
-        <p class="text-lg text-[var(--color-muted)] leading-relaxed mb-8 max-w-lg animate-fade-up delay-200">
-          Ayudo a negocios y marcas personales a crecer mediante
-          <strong class="text-[var(--color-ink)] font-medium">desarrollo web</strong>,
-          <strong class="text-[var(--color-ink)] font-medium">SEO</strong> y
-          <strong class="text-[var(--color-ink)] font-medium">marketing digital</strong>.
-          Resultados medibles desde el primer mes.
+        <!-- Tech stack tags -->
+        <div class="flex flex-wrap gap-2 mb-7 animate-fade-up delay-200">
+          {stack.map(tag => (
+            <span class="text-xs font-medium text-[#555] border border-[#222] px-3 py-1 rounded-full font-body tracking-wide">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <!-- Sub-description -->
+        <p class="text-base text-[#7A7A7A] leading-relaxed mb-9 max-w-lg animate-fade-up delay-300 font-body">
+          Desarrollo web, automatización y marketing digital para negocios que quieren
+          <span class="text-[#ECECEC]"> resultados medibles</span>, no promesas vacías.
         </p>
 
         <!-- CTAs -->
-        <div class="flex flex-col sm:flex-row gap-3 mb-12 animate-fade-up delay-300">
-          <a href="#proyectos" class="btn btn-outline">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-            </svg>
-            Ver Proyectos
-          </a>
+        <div class="flex flex-col sm:flex-row gap-3 mb-14 animate-fade-up delay-400">
           <a href="#" data-booking-open class="btn btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.9 3.41 2 2 0 0 1 3.88 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
             Agenda una llamada
           </a>
+          <a href="#proyectos" class="btn btn-outline">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Ver proyectos
+          </a>
         </div>
 
-        <!-- Stats -->
-        <div class="flex flex-wrap gap-8 animate-fade-up delay-400">
+        <!-- Stats row -->
+        <div class="flex flex-wrap gap-8 animate-fade-up delay-500">
           {stats.map(stat => (
             <div>
               <div class="flex items-baseline gap-0.5">
                 <span
-                  class="text-3xl font-black text-[var(--color-ink)] font-display"
+                  class="text-3xl font-bold text-[#ECECEC] font-display"
                   data-counter={stat.value}
                 >0</span>
-                <span class="text-2xl font-bold text-[var(--color-secondary)] font-display">{stat.suffix}</span>
+                <span class="text-2xl font-semibold text-[#606060] font-display">{stat.suffix}</span>
               </div>
-              <p class="text-xs text-[var(--color-muted)] mt-0.5 font-medium">{stat.label}</p>
+              <p class="text-xs text-[#4A4A4A] mt-0.5 font-medium tracking-wide">{stat.label}</p>
             </div>
           ))}
         </div>
       </div>
 
-      <!-- Right: Visual -->
+      <!-- ── Right: Profile photo with orbital rings ── -->
       <div class="flex items-center justify-center animate-scale-in delay-300 mt-10 lg:mt-0">
-        <div class="relative w-full max-w-[340px] sm:max-w-[420px] lg:max-w-[480px]">
+        <div class="relative w-full max-w-[340px] sm:max-w-[400px] lg:max-w-[440px]">
 
-          <!-- Glow de fondo -->
-          <div
-            class="absolute inset-0 -z-10 scale-105 blur-3xl opacity-25 rounded-3xl"
-            style="background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 60%, var(--color-accent) 100%);"
-            aria-hidden="true"
-          ></div>
+          <!-- Orbital mini-arcs behind the photo -->
+          <div class="absolute -inset-10 pointer-events-none" aria-hidden="true">
+            <svg viewBox="0 0 520 560" fill="none" class="w-full h-full">
+              <ellipse
+                cx="260" cy="280" rx="230" ry="255"
+                stroke="rgba(210,210,210,0.28)" stroke-width="1.2"
+                style="transform-box: view-box; transform-origin: 50% 50%; animation: arc-orbit-ccw 38s linear infinite;"
+              />
+              <ellipse
+                cx="260" cy="280" rx="170" ry="195"
+                stroke="rgba(210,210,210,0.22)" stroke-width="1"
+                style="transform-box: view-box; transform-origin: 50% 50%; animation: arc-orbit-cw 26s -7s linear infinite;"
+              />
+              <ellipse
+                cx="260" cy="280" rx="110" ry="125"
+                stroke="rgba(210,210,210,0.18)" stroke-width="0.9"
+                style="transform-box: view-box; transform-origin: 50% 50%; animation: arc-orbit-ccw 18s linear infinite;"
+              />
+            </svg>
+          </div>
 
-          <!-- Marco decorativo exterior -->
-          <div class="absolute -inset-1 rounded-2xl opacity-30"
-            style="background: linear-gradient(135deg, var(--color-secondary), var(--color-accent)); border-radius: 1.25rem;"
-            aria-hidden="true"
-          ></div>
-
-          <!-- Imagen principal -->
-          <div class="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-[var(--color-border)]">
+          <!-- Photo container -->
+          <div class="relative rounded-2xl overflow-hidden ring-1 ring-white/[0.04] shadow-2xl">
             <img
-              src="/images/bayona_digital_header.png"
-              alt="Bayona Digital Systems — proyectos web y marketing digital"
+              src="/newfoto.png"
+              alt="Edwin Bayona — Desarrollador Web y Especialista en Automatización"
               class="w-full h-auto object-cover block"
               loading="eager"
             />
-            <!-- Overlay sutil en la parte inferior para profundidad -->
+            <!-- Bottom gradient for depth -->
             <div
               class="absolute inset-0 pointer-events-none"
-              style="background: linear-gradient(to top, rgb(0 0 0 / 0.15) 0%, transparent 50%);"
+              style="background: linear-gradient(to top, rgba(8,8,8,0.55) 0%, transparent 45%);"
               aria-hidden="true"
             ></div>
           </div>
 
-          <!-- Floating badge: proyecto entregado -->
-          <div
-            class="absolute -top-4 -right-4 card px-3 py-2 flex items-center gap-2 shadow-lg"
-            style="animation: float 3s ease-in-out infinite;"
-          >
-            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-green-600">
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-            </div>
-            <span class="text-xs font-semibold font-display text-[var(--color-ink)]">Proyecto entregado</span>
-          </div>
-
-          <!-- Floating badge: ventas -->
-          <div
-            class="absolute -bottom-4 -left-4 card px-3 py-2 flex items-center gap-2 shadow-lg"
-            style="animation: float 3s ease-in-out infinite; animation-delay: 1.5s;"
-          >
-            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-[var(--color-secondary)]">
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-              </svg>
-            </div>
-            <span class="text-xs font-semibold font-display text-[var(--color-ink)]">+180% en ventas</span>
-          </div>
-
-          <!-- Floating badge: live -->
-          <div
-            class="absolute top-4 -left-5 card px-3 py-1.5 flex items-center gap-1.5 shadow-lg"
-            style="animation: float 3s ease-in-out infinite; animation-delay: 0.8s;"
-          >
-            <span class="dot-live"></span>
-            <span class="text-[10px] font-semibold text-[var(--color-muted)] uppercase tracking-wider">En línea</span>
-          </div>
         </div>
       </div>
 
     </div>
   </div>
 
-  <!-- Scroll indicator -->
+  <!-- Scroll cue -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in delay-800">
-    <span class="text-xs text-[var(--color-subtle)] font-medium tracking-widest uppercase">Scroll</span>
-    <div class="w-5 h-8 rounded-full border-2 border-[var(--color-border)] flex justify-center pt-1.5">
-      <div class="w-1 h-2 bg-[var(--color-secondary)] rounded-full" style="animation: float 1.5s ease-in-out infinite;"></div>
+    <span class="text-[10px] text-[#3A3A3A] font-medium tracking-[0.2em] uppercase">Scroll</span>
+    <div class="w-4 h-7 rounded-full border border-[#252525] flex justify-center pt-1">
+      <div class="w-0.5 h-1.5 bg-[#555] rounded-full" style="animation: float 1.6s ease-in-out infinite;"></div>
     </div>
   </div>
 </section>
+
+<style>
+  .neon-yellow {
+    color: #FFE135;
+    text-shadow:
+      0 0 8px  rgba(255, 220, 0, 0.9),
+      0 0 20px rgba(255, 200, 0, 0.7),
+      0 0 45px rgba(255, 180, 0, 0.5),
+      0 0 80px rgba(255, 160, 0, 0.25);
+  }
+</style>

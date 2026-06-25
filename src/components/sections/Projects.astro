@@ -2,7 +2,7 @@
 import { featuredProjects } from '@/data/projects';
 ---
 
-<section id="proyectos" class="section bg-white" aria-label="Proyectos destacados">
+<section id="proyectos" class="section bg-[#080808]" aria-label="Proyectos destacados">
   <div class="max-w-7xl mx-auto px-6">
 
     <!-- Header -->
@@ -11,16 +11,16 @@ import { featuredProjects } from '@/data/projects';
         <div class="section-badge mb-4">
           <span class="badge badge-primary">Proyectos</span>
         </div>
-        <h2 class="text-3xl md:text-4xl font-black">
+        <h2 class="text-3xl md:text-4xl font-bold">
           Casos de éxito
           <span class="gradient-text"> reales</span>
         </h2>
-        <p class="text-[var(--color-muted)] mt-3 max-w-md">
+        <p class="text-[var(--color-muted)] mt-3 max-w-md text-[15px]">
           No hablo de teoría. Aquí están los proyectos que han generado resultados reales para clientes reales.
         </p>
       </div>
       <a href="#contacto" class="btn btn-outline flex-shrink-0 text-sm self-start sm:self-end">
-        Ver todos los proyectos
+        Ver todos
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
@@ -28,42 +28,35 @@ import { featuredProjects } from '@/data/projects';
     </div>
 
     <!-- Projects grid -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
       {featuredProjects.map((project, i) => (
         <article
           class={`card overflow-hidden group reveal delay-${(i + 1) * 100}`}
           aria-label={`Proyecto: ${project.title}`}
         >
-          <!-- Image / placeholder -->
-          <div class="relative h-44 overflow-hidden bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center">
+          <!-- Image -->
+          <div class="relative h-44 overflow-hidden bg-[#0F0F0F]">
             {project.image && (
               <img
                 src={project.image}
                 alt={`Imagen del proyecto ${project.title}`}
-                class="absolute inset-0 w-full h-full object-cover"
+                class="absolute inset-0 w-full h-full object-cover opacity-90"
               />
             )}
-
             {!project.image && (
-              <>
-                <div class="absolute inset-0 opacity-10">
-                  <div class="absolute inset-0 bg-grid"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-12 h-12 rounded-xl bg-[#1E1E1E] border border-[#282828] flex items-center justify-center">
+                  <span class="text-[#606060] font-bold text-lg font-display">
+                    {project.title.split(' ').map((w: string) => w[0]).join('').slice(0, 2)}
+                  </span>
                 </div>
-                <div class="relative text-center px-6">
-                  <div class="w-12 h-12 rounded-xl bg-white/15 mx-auto mb-3 flex items-center justify-center">
-                    <span class="text-white font-black text-lg font-display">
-                      {project.title.split(' ').map(w => w[0]).join('').slice(0, 2)}
-                    </span>
-                  </div>
-                </div>
-              </>
+              </div>
             )}
-
             <!-- Hover overlay -->
-            <div class="absolute inset-0 bg-[var(--color-ink)]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+            <div class="absolute inset-0 bg-[#080808]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <a
                 href={`/proyectos/${project.slug}`}
-                class="btn bg-white text-[var(--color-ink)] text-sm py-2 px-4 translate-y-3 group-hover:translate-y-0 transition-transform duration-300"
+                class="btn btn-primary text-sm py-2 px-4 translate-y-3 group-hover:translate-y-0 transition-transform duration-300"
               >
                 Ver caso de estudio
               </a>
@@ -72,29 +65,27 @@ import { featuredProjects } from '@/data/projects';
 
           <!-- Content -->
           <div class="p-6">
-            <!-- Tags -->
             <div class="flex flex-wrap gap-1.5 mb-3">
-              {project.tags.slice(0, 2).map(tag => (
-                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[var(--color-border-soft)] text-[var(--color-muted)] border border-[var(--color-border)]">
+              {project.tags.slice(0, 2).map((tag: string) => (
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#1A1A1A] text-[#606060] border border-[#282828]">
                   {tag}
                 </span>
               ))}
-              <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[rgb(37_99_235/0.08)] text-[var(--color-secondary)] border border-[rgb(37_99_235/0.15)]">
+              <span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#1A1A1A] text-[#808080] border border-[#282828]">
                 {project.industry}
               </span>
             </div>
 
-            <h3 class="font-bold text-[var(--color-ink)] text-lg mb-5">{project.title}</h3>
+            <h3 class="font-semibold text-[var(--color-ink)] text-[15px] mb-5">{project.title}</h3>
 
-            <!-- Result -->
             <div class="flex items-center justify-between pt-4 border-t border-[var(--color-border)]">
               <div>
-                <div class="text-sm text-[var(--color-muted)]">Resultado</div>
-                <div class="font-bold text-[var(--color-secondary)] text-sm font-display">{project.result}</div>
+                <div class="text-xs text-[var(--color-muted)]">Resultado</div>
+                <div class="font-semibold text-[#A0A0A0] text-sm font-display">{project.result}</div>
               </div>
               <a
                 href={`/proyectos/${project.slug}`}
-                class="flex items-center gap-1 text-xs font-semibold text-[var(--color-secondary)] hover:gap-2 transition-all duration-200"
+                class="flex items-center gap-1 text-xs font-semibold text-[#606060] hover:text-[#ECECEC] hover:gap-2 transition-all duration-200"
                 aria-label={`Ver caso de estudio de ${project.title}`}
               >
                 Ver caso
