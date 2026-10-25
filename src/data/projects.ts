@@ -137,7 +137,7 @@ export const projects: Project[] = [
       'El sitemap se regenera con fechas de modificación reales.',
     ],
     image: promogimmicksImage,
-    imageAlt: 'Página de inicio de PromoGimmicks con productos destacados y botón de consulta',
+    imageAlt: 'Página de inicio de PromoGimmicks con el titular «Artículos promocionales con tu logo, en Ecuador» y el botón Cotizar ahora',
     githubUrl: 'https://github.com/edt092/promogimmicks-fullstack-commerce',
     featured: true,
   },
