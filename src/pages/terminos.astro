@@ -1,0 +1,46 @@
+---
+import LegalPage from '@/components/layout/LegalPage.astro';
+import { site } from '@/data/site';
+---
+
+<LegalPage
+  title="Términos de uso"
+  description="Condiciones de uso del sitio web de Bayona Digital Systems."
+  updated="25 de octubre de 2026"
+>
+  <p>
+    Estos términos regulan el uso del sitio web de Bayona Digital Systems. Al navegar por él aceptas estas condiciones.
+  </p>
+
+  <h2>Finalidad del sitio</h2>
+  <p>
+    El contenido del sitio es informativo: describe servicios, métodos de trabajo y casos de estudio. No constituye
+    una oferta vinculante. Las condiciones de cada proyecto (alcance, plazos, precio, propiedad de los entregables y
+    soporte) se definen por escrito en la propuesta correspondiente.
+  </p>
+
+  <h2>Casos de estudio y marcas</h2>
+  <p>
+    Los casos de estudio describen el trabajo técnico realizado y sus resultados documentados. Los nombres, logotipos
+    y capturas de cada proyecto pertenecen a sus respectivos titulares y se muestran solo para ilustrar el trabajo.
+  </p>
+
+  <h2>Propiedad intelectual</h2>
+  <p>
+    Los textos, el diseño y el código de este sitio pertenecen a Bayona Digital Systems, salvo que se indique otra
+    cosa. Puedes citarlos o enlazarlos indicando la fuente. Los repositorios públicos enlazados se rigen por la licencia
+    que figure en cada uno.
+  </p>
+
+  <h2>Enlaces externos</h2>
+  <p>
+    El sitio enlaza a servicios de terceros, como GitHub. Bayona Digital Systems no controla su contenido ni sus
+    condiciones de uso.
+  </p>
+
+  <h2>Cambios</h2>
+  <p>
+    Estos términos pueden actualizarse; la fecha de la última modificación figura al inicio de la página. Para
+    cualquier duda escribe a <a href={`mailto:${site.email}`}>{site.email}</a>.
+  </p>
+</LegalPage>

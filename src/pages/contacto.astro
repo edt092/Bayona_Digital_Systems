@@ -1,0 +1,177 @@
+---
+import Layout from '@/components/layout/Layout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import { services } from '@/data/services';
+import { site } from '@/data/site';
+---
+
+<Layout
+  title="Contacto: cuéntanos qué necesita resolver tu equipo"
+  description="Escribe a Bayona Digital Systems para hablar de tu plataforma web, catálogo B2B o automatización de datos. Qué ocurre después de escribir y cómo se usan tus datos."
+>
+  <PageHeader
+    eyebrow="Contacto"
+    title="Cuéntanos qué necesita resolver tu equipo"
+    lead="Escribe por correo con una descripción breve del reto. Edwin Bayona revisa cada mensaje y responde para proponer una conversación o pedir el contexto que falte."
+    breadcrumbs={[{ label: 'Contacto' }]}
+  />
+
+  <section class="section" aria-label="Formas de contacto">
+    <div class="container-site grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-start">
+      <!-- Correo directo: funciona siempre, también sin JavaScript -->
+      <div class="space-y-8">
+        <div class="panel p-6 md:p-8">
+          <h2 class="text-xl">Escríbenos por correo</h2>
+          <p class="mt-3 text-soft">Es la vía de contacto principal.</p>
+          <p class="mt-5 font-display text-xl font-semibold text-ink [overflow-wrap:anywhere] md:text-2xl" id="contact-email">{site.email.split('@')[0]}@<wbr />{site.email.split('@')[1]}</p>
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+            <a href={`mailto:${site.email}`} class="btn btn-primary">Abrir mi aplicación de correo</a>
+            <button type="button" class="btn btn-secondary hidden" data-copy-email>Copiar dirección</button>
+          </div>
+          <p class="mt-3 min-h-6 text-[0.9375rem] text-success" role="status" data-copy-status></p>
+        </div>
+
+        <div>
+          <h2 class="text-xl">Qué ocurre después</h2>
+          <ol class="mt-5 space-y-4">
+            <li class="flex gap-4">
+              <span class="font-mono text-sm text-action pt-0.5">01</span>
+              <p class="text-soft">Se revisa tu mensaje para entender el problema, el contexto y si encaja con los servicios.</p>
+            </li>
+            <li class="flex gap-4">
+              <span class="font-mono text-sm text-action pt-0.5">02</span>
+              <p class="text-soft">Recibes una respuesta por correo con preguntas, si faltan datos, o una propuesta de horario para conversar.</p>
+            </li>
+            <li class="flex gap-4">
+              <span class="font-mono text-sm text-action pt-0.5">03</span>
+              <p class="text-soft">En la conversación se revisa el reto y se acuerda el siguiente paso. Recibir tu mensaje no implica aceptar el proyecto.</p>
+            </li>
+          </ol>
+        </div>
+
+        <div class="border-l-2 border-control pl-4 text-[0.9375rem] text-muted">
+          <p>
+            No envíes documentos confidenciales en el primer mensaje; si hacen falta, se acuerda un canal adecuado.
+            Lee cómo se tratan tus datos en la <a href="/privacidad/" class="text-link">política de privacidad</a>.
+          </p>
+        </div>
+      </div>
+
+      <!-- Asistente de borrador: mejora progresiva, oculto sin JavaScript -->
+      <div class="panel p-6 md:p-8" data-draft-wrapper hidden>
+        <h2 class="text-xl">Prepara tu mensaje</h2>
+        <p class="mt-3 text-soft">
+          Completa estos campos y se abrirá tu aplicación de correo con el mensaje redactado.
+          <strong class="text-ink">El envío lo haces tú desde tu correo</strong>; este formulario no guarda ni envía datos.
+        </p>
+
+        <form class="mt-8 grid gap-6" novalidate data-draft-form>
+          <div class="field">
+            <label for="name" class="field-label">Nombre</label>
+            <input id="name" name="name" type="text" class="input" autocomplete="name" required aria-describedby="name-error" />
+            <p id="name-error" class="field-error"></p>
+          </div>
+
+          <div class="field">
+            <label for="company" class="field-label">Empresa <span class="optional">(opcional)</span></label>
+            <input id="company" name="company" type="text" class="input" autocomplete="organization" />
+          </div>
+
+          <div class="field">
+            <label for="service" class="field-label">Servicio de interés <span class="optional">(opcional)</span></label>
+            <select id="service" name="service" class="input">
+              <option value="">Aún no lo sé</option>
+              {services.map(s => <option value={s.slug}>{s.title}</option>)}
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="need" class="field-label">¿Qué necesita resolver tu equipo?</label>
+            <p id="need-hint" class="field-hint">Ej.: integrar el catálogo con nuestro sistema de inventario y publicarlo en la web.</p>
+            <textarea id="need" name="need" class="input" required aria-describedby="need-hint need-error"></textarea>
+            <p id="need-error" class="field-error"></p>
+          </div>
+
+          <div class="flex flex-col gap-4">
+            <button type="submit" class="btn btn-primary self-start">Abrir borrador de correo</button>
+            <div role="status" class="text-[0.9375rem]" data-draft-status></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { buildMailto, validateDraft, type ContactErrors } from '@/lib/contact';
+
+  const email = document.getElementById('contact-email')?.textContent?.trim() ?? '';
+
+  /* Copiar dirección */
+  const copyButton = document.querySelector<HTMLButtonElement>('[data-copy-email]');
+  const copyStatus = document.querySelector<HTMLElement>('[data-copy-status]');
+  if (copyButton && navigator.clipboard) {
+    copyButton.hidden = false;
+    copyButton.classList.remove('hidden');
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(email);
+        if (copyStatus) copyStatus.textContent = 'Dirección copiada al portapapeles.';
+      } catch {
+        if (copyStatus) copyStatus.textContent = 'No se pudo copiar. Selecciona la dirección y cópiala manualmente.';
+      }
+    });
+  }
+
+  /* Borrador de correo */
+  const wrapper = document.querySelector<HTMLElement>('[data-draft-wrapper]');
+  const form = document.querySelector<HTMLFormElement>('[data-draft-form]');
+  const status = document.querySelector<HTMLElement>('[data-draft-status]');
+
+  if (wrapper && form && status) {
+    wrapper.hidden = false;
+
+    const serviceSelect = form.elements.namedItem('service') as HTMLSelectElement;
+    const preselected = new URLSearchParams(window.location.search).get('servicio');
+    if (preselected && [...serviceSelect.options].some(o => o.value === preselected)) {
+      serviceSelect.value = preselected;
+    }
+
+    const showErrors = (errors: ContactErrors) => {
+      (['name', 'need'] as const).forEach(field => {
+        const input = form.elements.namedItem(field) as HTMLInputElement | HTMLTextAreaElement;
+        const message = document.getElementById(`${field}-error`);
+        const error = errors[field];
+        input.setAttribute('aria-invalid', error ? 'true' : 'false');
+        if (message) message.textContent = error ?? '';
+      });
+    };
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const draft = {
+        name: String(data.get('name') ?? ''),
+        company: String(data.get('company') ?? ''),
+        service: serviceSelect.value ? serviceSelect.selectedOptions[0].text : '',
+        need: String(data.get('need') ?? ''),
+      };
+
+      const errors = validateDraft(draft);
+      showErrors(errors);
+      const firstInvalid = (['name', 'need'] as const).find(f => errors[f]);
+      if (firstInvalid) {
+        status.className = 'text-[0.9375rem] text-error';
+        status.textContent = 'Revisa los campos marcados para poder preparar el borrador.';
+        (form.elements.namedItem(firstInvalid) as HTMLElement).focus();
+        return;
+      }
+
+      window.location.href = buildMailto(email, draft);
+      status.className = 'text-[0.9375rem] text-soft';
+      status.textContent =
+        'Se ha intentado abrir tu aplicación de correo con el borrador. El mensaje todavía no se ha enviado: revísalo y envíalo desde tu correo. Si no se abrió ninguna aplicación, escríbenos directamente a ' +
+        email + '. Tus datos siguen en el formulario.';
+    });
+  }
+</script>

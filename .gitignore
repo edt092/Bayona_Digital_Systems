@@ -29,3 +29,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Material privado: no se publica ni se versiona
+private/

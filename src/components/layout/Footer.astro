@@ -1,113 +1,78 @@
 ---
+import Logo from '@/components/ui/Logo.astro';
+import { services } from '@/data/services';
+import { projects } from '@/data/projects';
+import { site } from '@/data/site';
+
 const year = new Date().getFullYear();
 
-const footerLinks = {
-  servicios: [
-    { label: 'Desarrollo Web',     href: '#servicios' },
-    { label: 'SEO',                href: '#servicios' },
-    { label: 'Marketing Digital',  href: '#servicios' },
-  ],
-  empresa: [
-    { label: 'Sobre mí',   href: '#sobre-mi' },
-    { label: 'Proyectos',  href: '#proyectos' },
-    { label: 'Proceso',    href: '#proceso' },
-    { label: 'Blog',       href: '/blog' },
-  ],
-};
+const columns = [
+  {
+    title: 'Servicios',
+    links: [
+      { label: 'Todos los servicios', href: '/servicios/' },
+      ...services.map(s => ({ label: s.title, href: `/servicios/${s.slug}/` })),
+    ],
+  },
+  {
+    title: 'Casos de estudio',
+    links: [
+      { label: 'Todos los casos', href: '/proyectos/' },
+      ...projects.map(p => ({ label: p.title, href: `/proyectos/${p.slug}/` })),
+    ],
+  },
+  {
+    title: 'Bayona Digital Systems',
+    links: [
+      { label: 'Cómo trabajamos', href: '/como-trabajamos/' },
+      { label: 'Contacto', href: '/contacto/' },
+      { label: 'Privacidad', href: '/privacidad/' },
+      { label: 'Términos de uso', href: '/terminos/' },
+    ],
+  },
+];
 ---
 
-<footer style="background: #050505;" class="text-white">
-  <!-- Top edge -->
-  <div class="border-t border-[#141414]"></div>
-
-  <!-- Main -->
-  <div class="max-w-7xl mx-auto px-6 py-16">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
-
-      <!-- Brand -->
-      <div class="md:col-span-2">
-        <a href="/" class="inline-flex items-center gap-3 mb-5 group">
-          <img
-            src="/logo-eb.png"
-            alt="Bayona Digital Systems"
-            width="60"
-            height="60"
-            class="opacity-70 group-hover:opacity-100 transition-opacity"
-            loading="lazy"
-          />
-          <div class="flex flex-col leading-none">
-            <span class="font-display font-semibold text-[12px] tracking-[0.18em] text-white/70 uppercase">Bayona Digital</span>
-            <span class="font-body text-[9px] tracking-[0.2em] text-[#333] uppercase mt-0.5">Systems</span>
-          </div>
-        </a>
-        <p class="text-[#404040] text-sm leading-relaxed max-w-sm mb-6">
-          Desarrollo web, automatización y marketing digital para negocios que quieren crecer. Resultados medibles, no promesas vacías.
-        </p>
-
-        <div class="flex items-center gap-2.5">
-          {[
-            { href: 'mailto:hola@bayonadigitalsystems.com', label: 'Email', icon: `<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>` },
-            { href: 'https://linkedin.com/in/bayonadigital', label: 'LinkedIn', icon: `<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/>` },
-            { href: 'https://github.com/edt092', label: 'GitHub', icon: `<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>` },
-          ].map(s => (
-            <a
-              href={s.href}
-              target={s.href.startsWith('http') ? '_blank' : undefined}
-              rel={s.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              class="w-8 h-8 rounded-lg bg-[#161616] hover:bg-[#242424] border border-[#222] flex items-center justify-center transition-colors duration-200"
-              aria-label={s.label}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#555]" set:html={s.icon}></svg>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      <!-- Servicios -->
-      <div>
-        <h3 class="text-[11px] font-semibold text-[#333] mb-5 font-display uppercase tracking-[0.15em]">Servicios</h3>
-        <ul class="space-y-3">
-          {footerLinks.servicios.map(link => (
-            <li>
-              <a href={link.href} class="text-sm text-[#404040] hover:text-[#ECECEC] transition-colors duration-200">
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <!-- Empresa -->
-      <div>
-        <h3 class="text-[11px] font-semibold text-[#333] mb-5 font-display uppercase tracking-[0.15em]">Empresa</h3>
-        <ul class="space-y-3">
-          {footerLinks.empresa.map(link => (
-            <li>
-              <a href={link.href} class="text-sm text-[#404040] hover:text-[#ECECEC] transition-colors duration-200">
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+<footer class="border-t border-line bg-[#080E1A]">
+  <div class="container-site grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <a href="/" class="inline-block rounded-md" aria-label="Bayona Digital Systems — Inicio">
+        <Logo />
+      </a>
+      <p class="mt-5 max-w-xs text-[0.9375rem] text-muted">
+        Productos web, automatización e integración de datos para operaciones B2B.
+      </p>
+      <ul class="mt-6 space-y-2 text-[0.9375rem]">
+        <li>
+          <a href={`mailto:${site.email}`} class="text-link">{site.email}</a>
+        </li>
+        <li>
+          <a href={site.github} class="text-link" target="_blank" rel="noopener noreferrer">
+            GitHub<span class="sr-only"> (se abre en una pestaña nueva)</span>
+          </a>
+        </li>
+      </ul>
     </div>
+
+    {columns.map(col => (
+      <nav aria-label={col.title}>
+        <h2 class="font-mono text-[0.8125rem] font-medium tracking-[0.04em] text-muted">{col.title}</h2>
+        <ul class="mt-4 space-y-1">
+          {col.links.map(link => (
+            <li>
+              <a href={link.href} class="inline-flex min-h-10 items-center text-[0.9375rem] text-soft hover:text-ink hover:underline underline-offset-4">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
   </div>
 
-  <!-- Bottom bar -->
-  <div class="border-t border-[#111]">
-    <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p class="text-[11px] text-[#2A2A2A]">
-        &copy; {year} Bayona Digital Systems. Todos los derechos reservados.
-      </p>
-      <div class="flex items-center gap-4">
-        <a href="/privacidad" class="text-[11px] text-[#2A2A2A] hover:text-[#555] transition-colors">
-          Privacidad
-        </a>
-        <span class="text-[#1A1A1A]">·</span>
-        <a href="/terminos" class="text-[11px] text-[#2A2A2A] hover:text-[#555] transition-colors">
-          Términos
-        </a>
-      </div>
+  <div class="border-t border-line">
+    <div class="container-site py-5 text-sm text-muted">
+      © {year} Bayona Digital Systems
     </div>
   </div>
 </footer>

@@ -1,39 +1,67 @@
-import type { ProcessStep } from '@/types';
+import type { FaqItem, ProcessStep } from '@/types';
 
 export const processSteps: ProcessStep[] = [
   {
     number: '01',
     title: 'Descubrimiento',
-    description: 'Entendemos tu negocio, objetivos, público objetivo y competencia. Sin esto, nada más tiene sentido.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
-    deliverables: ['Brief del proyecto', 'Análisis de competencia', 'Definición de KPIs'],
+    description:
+      'Se define el problema de negocio, quién usará la solución, qué datos existen y qué queda fuera del alcance.',
+    clientGets: ['Resumen del problema y objetivos', 'Alcance inicial con supuestos', 'Riesgos y dependencias identificados'],
+    clientProvides: 'Contexto del negocio, accesos de lectura a las fuentes y una persona que decida prioridades.',
   },
   {
     number: '02',
-    title: 'Estrategia',
-    description: 'Diseñamos el plan de acción basado en datos. Cada decisión tiene un propósito medible.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M12 2v20M2 12l4-4M2 12l4 4M22 12l-4-4M22 12l-4 4"/></svg>`,
-    deliverables: ['Mapa de sitio', 'Estrategia de contenido', 'Plan de tráfico'],
+    title: 'Diseño UX/UI',
+    description:
+      'Flujos, arquitectura de información y prototipo de las pantallas clave, revisados antes de escribir código de producción.',
+    clientGets: ['Mapa del sitio o del flujo de datos', 'Prototipo navegable de las plantillas clave', 'Criterios de aceptación por tarea'],
+    clientProvides: 'Revisión del prototipo y contenido real o de muestra.',
   },
   {
     number: '03',
-    title: 'Diseño UX/UI',
-    description: 'Wireframes y diseño visual alineado con tu marca y optimizado para conversión.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>`,
-    deliverables: ['Wireframes', 'Prototipo interactivo', 'Design system'],
+    title: 'Desarrollo',
+    description:
+      'Implementación por recorridos completos, en un repositorio de tu propiedad, con revisiones periódicas sobre una versión de prueba.',
+    clientGets: ['Acceso a una versión de prueba', 'Código versionado en tu repositorio', 'Registro de decisiones técnicas'],
+    clientProvides: 'Feedback en cada revisión y validación de contenido.',
   },
   {
     number: '04',
-    title: 'Desarrollo',
-    description: 'Código limpio, rápido y escalable. Implementamos con las mejores prácticas del industria.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-    deliverables: ['Sitio funcional', 'Pruebas QA', 'Configuración SEO técnico'],
+    title: 'Validación',
+    description:
+      'Se comprueban las tareas principales, la accesibilidad, el rendimiento y los casos de error antes de publicar.',
+    clientGets: ['Checklist de verificación con resultados', 'Lista de incidencias abiertas, si las hay'],
+    clientProvides: 'Aprobación de los criterios de lanzamiento.',
   },
   {
     number: '05',
-    title: 'Optimización',
-    description: 'Medimos, analizamos y mejoramos continuamente. El lanzamiento es el comienzo, no el final.',
-    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
-    deliverables: ['Análisis de métricas', 'A/B testing', 'Reporte mensual'],
+    title: 'Entrega',
+    description:
+      'Publicación, traspaso de accesos y documentación de operación. El soporte posterior se acuerda por separado según lo que necesites.',
+    clientGets: ['Sistema en producción', 'Accesos y documentación', 'Plan de mantenimiento propuesto'],
+    clientProvides: 'Cuentas de dominio y hosting a nombre de tu empresa.',
+  },
+];
+
+export const generalFaq: FaqItem[] = [
+  {
+    question: '¿Qué tipo de proyectos encajan mejor?',
+    answer:
+      'Catálogos y plataformas web B2B, y procesos donde hoy se mueven datos a mano entre sistemas. Si tu proyecto es otro, cuéntalo igualmente y te diremos con franqueza si encaja.',
+  },
+  {
+    question: '¿Cómo se define el alcance?',
+    answer:
+      'A partir de una primera conversación y, si hace falta, una fase corta de descubrimiento. El alcance se entrega por escrito con lo incluido, lo excluido y los supuestos.',
+  },
+  {
+    question: '¿Con quién trabajo durante el proyecto?',
+    answer:
+      'Con Edwin Bayona como interlocutor técnico de principio a fin. Responsables, entregables y frecuencia de seguimiento se acuerdan antes de empezar.',
+  },
+  {
+    question: '¿Cómo empiezo?',
+    answer:
+      'Escríbenos describiendo qué necesita resolver tu equipo. Con esa información se propone una conversación para revisar el reto y el siguiente paso.',
   },
 ];

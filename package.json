@@ -7,11 +7,14 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "node --experimental-strip-types --no-warnings --test \"tests/**/*.test.ts\"",
+    "check:contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {
-    "astro": "^5.0.0",
     "@tailwindcss/vite": "^4.0.0",
+    "astro": "^5.0.0",
+    "sharp": "0.34.5",
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
@@ -19,7 +22,15 @@
     "typescript": "^5.0.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp", "@img/sharp-win32-x64"],
-    "approvedBuilds": ["esbuild", "sharp", "@img/sharp-win32-x64"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "@img/sharp-win32-x64"
+    ],
+    "approvedBuilds": [
+      "esbuild",
+      "sharp",
+      "@img/sharp-win32-x64"
+    ]
   }
 }

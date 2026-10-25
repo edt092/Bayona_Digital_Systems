@@ -1,0 +1,66 @@
+---
+import { Image } from 'astro:assets';
+import type { Project } from '@/types';
+import { getService } from '@/data/services';
+
+interface Props {
+  project: Project;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { project, headingLevel: Heading = 'h3' } = Astro.props;
+const serviceNames = project.services.map(s => getService(s)?.title).filter(Boolean);
+---
+
+<article class="case-card panel group relative flex flex-col overflow-hidden">
+  <div class="aspect-[16/9] overflow-hidden border-b border-line bg-raised">
+    <Image
+      src={project.image}
+      alt=""
+      widths={[480, 720, 960]}
+      sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
+      format="webp"
+      loading="lazy"
+      class="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+    />
+  </div>
+  <div class="flex flex-1 flex-col p-6">
+    <p class="font-mono text-[0.8125rem] text-muted">{project.sector}</p>
+    <Heading class="mt-2 text-xl">
+      <a href={`/proyectos/${project.slug}/`} class="case-link">
+        {project.title}
+      </a>
+    </Heading>
+    <p class="mt-2 text-[0.9375rem] text-soft">{project.headline}</p>
+
+    <dl class="mt-5 space-y-3 border-t border-line pt-5 text-[0.9375rem]">
+      <div>
+        <dt class="font-semibold text-ink">Reto</dt>
+        <dd class="mt-1 text-soft">{project.problem}</dd>
+      </div>
+      <div>
+        <dt class="font-semibold text-ink">Resultado técnico</dt>
+        <dd class="mt-1 text-soft">{project.output}</dd>
+      </div>
+    </dl>
+
+    <div class="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
+      <ul class="flex flex-wrap gap-2" aria-label="Servicios relacionados">
+        {serviceNames.map(name => <li class="chip">{name}</li>)}
+      </ul>
+      <span class="inline-flex items-center gap-1.5 font-display text-[0.9375rem] font-semibold text-action" aria-hidden="true">
+        Ver caso
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+      </span>
+    </div>
+  </div>
+</article>
+
+<style>
+  .case-card { transition: border-color 160ms ease; }
+  .case-card:hover, .case-card:focus-within { border-color: var(--color-control); }
+  .case-link { text-decoration: none; }
+  .case-link::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+  .case-link:focus-visible { outline: none; }
+  .case-card:has(.case-link:focus-visible) { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+</style>

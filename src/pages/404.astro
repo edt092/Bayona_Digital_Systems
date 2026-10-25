@@ -1,0 +1,39 @@
+---
+import Layout from '@/components/layout/Layout.astro';
+import { services } from '@/data/services';
+import { projects } from '@/data/projects';
+---
+
+<Layout title="Página no encontrada" description="La página que buscas no existe o ha cambiado de dirección." noindex>
+  <section class="section">
+    <div class="container-site">
+      <p class="eyebrow mb-4">Error 404</p>
+      <h1 class="max-w-3xl text-[clamp(2rem,4.5vw,3.25rem)]">No encontramos esta página</h1>
+      <p class="lead measure mt-5">
+        Puede que la dirección haya cambiado o que el enlace esté incompleto. Estos son los lugares más útiles para seguir:
+      </p>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <nav class="panel p-6" aria-labelledby="nf-servicios">
+          <h2 id="nf-servicios" class="text-lg">Servicios</h2>
+          <ul class="mt-4 space-y-2">
+            {services.map(s => <li><a href={`/servicios/${s.slug}/`} class="text-link">{s.title}</a></li>)}
+          </ul>
+        </nav>
+        <nav class="panel p-6" aria-labelledby="nf-casos">
+          <h2 id="nf-casos" class="text-lg">Casos de estudio</h2>
+          <ul class="mt-4 space-y-2">
+            {projects.map(p => <li><a href={`/proyectos/${p.slug}/`} class="text-link">{p.title}</a></li>)}
+          </ul>
+        </nav>
+        <div class="panel p-6">
+          <h2 class="text-lg">¿Buscabas otra cosa?</h2>
+          <p class="mt-4 text-soft">Escríbenos y te ayudamos a encontrarla.</p>
+          <a href="/contacto/" class="btn btn-primary mt-6">Ir a contacto</a>
+        </div>
+      </div>
+
+      <a href="/" class="text-link mt-10 inline-block">Volver al inicio</a>
+    </div>
+  </section>
+</Layout>

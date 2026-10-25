@@ -2,17 +2,18 @@
 import SEO from './SEO.astro';
 import Navbar from './Navbar.astro';
 import Footer from './Footer.astro';
-import BookingModal from '@/components/ui/BookingModal.astro';
 import '@/styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   noindex?: boolean;
+  type?: 'website' | 'article';
 }
 
-const { title, description, image, noindex } = Astro.props;
+const props = Astro.props;
 ---
 
 <!doctype html>
@@ -20,65 +21,23 @@ const { title, description, image, noindex } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/logo-eb.png" />
+    <meta name="theme-color" content="#0B1220" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <SEO {title} {description} {image} {noindex} />
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" is:inline></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap"
+    />
+    <SEO {...props} />
   </head>
   <body>
+    <a href="#contenido" class="skip-link">Saltar al contenido</a>
     <Navbar />
-    <main>
+    <main id="contenido" tabindex="-1" class="outline-none">
       <slot />
     </main>
     <Footer />
-    <BookingModal />
-
-    <script>
-      // Intersection Observer for reveal animations
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-      );
-
-      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-
-      // Counter animation
-      const counters = document.querySelectorAll('[data-counter]');
-      const counterObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const el = entry.target as HTMLElement;
-              const target = parseInt(el.dataset.counter || '0', 10);
-              const duration = 2000;
-              const step = target / (duration / 16);
-              let current = 0;
-
-              const timer = setInterval(() => {
-                current += step;
-                if (current >= target) {
-                  current = target;
-                  clearInterval(timer);
-                }
-                el.textContent = Math.floor(current).toString();
-              }, 16);
-
-              counterObserver.unobserve(el);
-            }
-          });
-        },
-        { threshold: 0.5 }
-      );
-
-      counters.forEach((el) => counterObserver.observe(el));
-    </script>
   </body>
 </html>

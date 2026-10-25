@@ -1,138 +1,210 @@
 import type { Project } from '@/types';
+import ksImage from '@/assets/projects/ks-promocionales.png';
+import promogimmicksImage from '@/assets/projects/promogimmicks.png';
+import contratadataImage from '@/assets/projects/contratadata.png';
 
 export const projects: Project[] = [
   {
-    id: '1',
     slug: 'ks-promocionales',
     title: 'KS Promocionales',
-    industry: 'E-commerce B2B',
-    image: '/images/project-ksp.png',
-    tags: ['Next.js 14', 'Python Scraping', 'Claude AI', 'Netlify CDN'],
-    problem: 'Catálogo de +2,000 productos promocionales disperso, sin presencia digital escalable ni contenido SEO único para cada producto.',
-    solution: 'Motor de e-commerce estático con Next.js 14 y pipeline de enriquecimiento con Claude Haiku que genera contenido único por producto desde una DB Postgres serverless.',
-    result: '2,096 páginas de producto indexables generadas automáticamente',
-    featured: true,
-    description: 'KS Promocionales es una tienda B2B de productos promocionales para Ecuador que resuelve el problema de escalar contenido SEO a miles de productos sin costos de servidor. El sistema genera 2,096 páginas estáticas en build-time con contenido único enriquecido por IA, desplegadas en CDN global.',
+    headline: 'Un catálogo B2B automatizado con generación estática de páginas',
+    sector: 'Comercio B2B · Productos promocionales (Ecuador)',
+    services: ['productos-web', 'automatizacion-datos'],
+    summary:
+      'Tienda B2B de artículos promocionales cuyo catálogo de más de 2.000 productos se extrae del proveedor, se enriquece con IA y se publica como sitio estático en CDN.',
+    problem:
+      'El catálogo del proveedor estaba disperso y no tenía una presencia digital escalable: mantener a mano una ficha útil para cada producto no era viable con miles de referencias.',
+    solution:
+      'Un pipeline separa la extracción de datos, el enriquecimiento de contenido y la publicación. El sitio se genera en build-time a partir de una base de datos Postgres serverless y se despliega en CDN sin servidor en runtime.',
+    scope: [
+      'Scraper del catálogo del proveedor',
+      'Modelo de datos en Postgres serverless (Neon)',
+      'Enriquecimiento de fichas con Claude Haiku',
+      'Sitio estático con Next.js 14',
+      'Despliegue continuo y cabeceras de seguridad en Netlify',
+    ],
+    output: '2.096 páginas de producto generadas; 2.008 elegibles para indexación según la configuración del proyecto.',
+    decisions: [
+      {
+        title: 'Desacoplar extracción y despliegue',
+        description:
+          'Los productos se guardan primero en Postgres. Un fallo del scraper no rompe el sitio publicado y el build trabaja siempre sobre datos ya validados.',
+      },
+      {
+        title: 'Controlar la calidad antes de indexar',
+        description:
+          'Solo las fichas marcadas como enriquecidas son elegibles para indexación; las demás reciben noindex para no publicar contenido delgado.',
+      },
+      {
+        title: 'Reducir el peso que llega al navegador',
+        description:
+          'El catálogo se divide en archivos JSON ligeros por categoría en lugar de un único archivo de 469 KB cargado en cliente.',
+      },
+    ],
+    outputs: [
+      '2.096 páginas de producto y 34 categorías generadas de forma estática',
+      'Variantes duplicadas resueltas con canonical y noindex',
+      'Redirecciones 301 declarativas para cambios de URL',
+      'Cabeceras HSTS, CSP y X-Frame-Options configuradas en la CDN',
+    ],
+    limitations:
+      'Las cifras describen la configuración del proyecto (páginas generadas y elegibles), no la indexación efectiva en buscadores ni resultados comerciales.',
     techStack: [
-      { name: 'Next.js 14', role: 'Frontend / SSG con export estático' },
+      { name: 'Next.js 14', role: 'Generación estática del sitio' },
       { name: 'Neon (Postgres)', role: 'Base de datos serverless' },
-      { name: 'Anthropic Claude Haiku', role: 'Enriquecimiento de contenido AI' },
-      { name: 'Python 3', role: 'Scraper de catálogo de proveedor' },
-      { name: 'Netlify CDN', role: 'Hosting y CI/CD automático' },
-      { name: 'next-sitemap', role: 'Generación de sitemap XML' },
+      { name: 'Claude Haiku', role: 'Enriquecimiento de fichas de producto' },
+      { name: 'Python 3', role: 'Extracción del catálogo del proveedor' },
+      { name: 'Netlify', role: 'CDN, CI/CD y cabeceras de seguridad' },
+      { name: 'next-sitemap', role: 'Sitemap XML' },
     ],
     pipeline: [
-      'Scraper Python recorre catalogospromocionales.com extrayendo nombres, descripciones, imágenes y categorías del proveedor',
-      'Los productos crudos se almacenan en Neon (Postgres serverless), desacoplando el scraping del proceso de despliegue',
-      'sync-from-neon.js consulta la DB y envía batches de 5 productos a Claude Haiku para generar títulos SEO, descripciones, historias de producto, características y casos de uso únicos',
-      'Solo los 2,008 productos con is_ai_optimized: true se indexan; los 88 restantes reciben noindex previniendo contenido delgado',
-      'Prebuild divide el catálogo en JSON slim por categoría (6 campos, máx 80 ítems) eliminando los 469KB que antes cargaba el bundle cliente',
-      'Next.js genera export estático completo: 2,096 páginas de producto + 34 categorías + blog + landing pages',
-      'Commit al repositorio dispara rebuild automático en Netlify CDN con headers de seguridad (HSTS, CSP, X-Frame-Options)',
+      'Un scraper en Python recorre el catálogo del proveedor y extrae nombres, descripciones, imágenes y categorías.',
+      'Los productos se almacenan en Neon (Postgres serverless), separando la extracción del despliegue.',
+      'Un script de sincronización envía lotes de 5 productos a Claude Haiku para generar títulos, descripciones, características y casos de uso.',
+      'Solo los productos marcados como optimizados (2.008) son elegibles para indexación; los 88 restantes reciben noindex.',
+      'Un paso de prebuild divide el catálogo en JSON ligeros por categoría (6 campos, máximo 80 ítems).',
+      'Next.js genera el export estático: 2.096 páginas de producto, 34 categorías, blog y landing pages.',
+      'Cada commit dispara un rebuild automático en Netlify.',
     ],
-    features: [
-      '2,096 páginas de producto con contenido único generado por Claude Haiku AI',
-      'Variantes duplicadas con canonical tags + noindex, eliminando overhead de redirects',
-      'Bundle optimization: JSON slim por categoría (fragmentado desde 469KB monolítico)',
-      'Arquitectura 100% estática: cero dependencias de servidor en runtime',
-      '301 redirects declarativos en netlify.toml para migraciones de slug sin pérdida de SEO',
-      'Headers de seguridad (HSTS, CSP, X-Frame-Options) configurados a nivel CDN',
-    ],
+    image: ksImage,
+    imageAlt: 'Página de inicio de KS Promocionales con el catálogo de artículos promocionales',
     githubUrl: 'https://github.com/edt092/ksp-ecommerce-engine',
+    featured: true,
   },
   {
-    id: '2',
     slug: 'promogimmicks',
     title: 'PromoGimmicks',
-    industry: 'E-commerce',
-    image: '/images/project-promogimmicks.png',
-    tags: ['Next.js 14', 'GitHub Actions', 'BeautifulSoup', 'SEO Técnico'],
-    problem: 'Catálogo de +1,000 productos promocionales que requería páginas actualizadas diariamente con datos frescos de proveedores, sin ninguna intervención manual.',
-    solution: 'Pipeline full-stack automatizado: scraper Python/BeautifulSoup en GitHub Actions recorre al proveedor diariamente y dispara rebuild automático en Netlify con cero intervención.',
-    result: '+1,000 páginas de producto actualizadas con 0 intervención manual',
-    featured: true,
-    description: 'PromoGimmicks es una plataforma e-commerce de productos promocionales para Ecuador con más de 1,000 páginas generadas estáticamente. Su pipeline de automatización completo elimina cualquier intervención manual: desde el scraping del proveedor hasta el despliegue en CDN global, todo ocurre automáticamente cada día.',
+    headline: 'Un catálogo de e-commerce que se actualiza a diario sin pasos manuales',
+    sector: 'Comercio electrónico · Productos promocionales (Ecuador)',
+    services: ['automatizacion-datos', 'productos-web'],
+    summary:
+      'Plataforma de productos promocionales con más de 1.000 páginas estáticas, alimentada por una extracción diaria programada que termina en un despliegue automático.',
+    problem:
+      'Las fichas debían reflejar a diario los datos del proveedor (precios, imágenes, categorías). Actualizarlas a mano era lento y propenso a errores.',
+    solution:
+      'Un flujo programado en GitHub Actions extrae los datos del proveedor, actualiza el catálogo en el repositorio y dispara la reconstrucción del sitio en Netlify.',
+    scope: [
+      'Scraper diario con BeautifulSoup y reintentos',
+      'Automatización programada con GitHub Actions',
+      'Sitio estático con Next.js 14 (App Router)',
+      'SEO técnico: datos estructurados, sitemap y redirecciones',
+    ],
+    output: 'Más de 1.000 páginas de producto regeneradas por un flujo diario programado, sin pasos manuales en la publicación.',
+    decisions: [
+      {
+        title: 'El repositorio como fuente de verdad',
+        description:
+          'El scraper escribe el catálogo en un archivo versionado. Cada actualización queda registrada como commit y puede revisarse o revertirse.',
+      },
+      {
+        title: 'Reintentos ante límites del proveedor',
+        description:
+          'El procesamiento por lotes con reintentos automáticos evita que un límite temporal del proveedor deje el catálogo incompleto.',
+      },
+      {
+        title: 'Sitemap con fechas reales',
+        description:
+          'El sitemap se regenera con las fechas de modificación reales en cada build, sin enviar señales de cambio falsas a los buscadores.',
+      },
+    ],
+    outputs: [
+      'Ejecución diaria programada (07:00 UTC) de extracción y despliegue',
+      'Landing pages por ciudad: Quito, Guayaquil, Cuenca y Manta',
+      'Más de 1.000 redirecciones 301 generadas para cambios de slug',
+      'Datos estructurados Product, Organization y BreadcrumbList en cada ficha',
+    ],
+    limitations:
+      'El resultado describe el funcionamiento del sistema; no se publican métricas de tráfico ni de ventas.',
     techStack: [
-      { name: 'Next.js 14 (App Router)', role: 'Frontend / SSG' },
+      { name: 'Next.js 14 (App Router)', role: 'Generación estática del sitio' },
       { name: 'TypeScript', role: 'Tipado estático' },
-      { name: 'Tailwind CSS + Framer Motion', role: 'Estilos y animaciones' },
-      { name: 'Python + BeautifulSoup', role: 'Web scraping del proveedor' },
-      { name: 'GitHub Actions', role: 'Automatización cron diaria' },
-      { name: 'Netlify CDN', role: 'Hosting con CI/CD automático' },
+      { name: 'Python + BeautifulSoup', role: 'Extracción de datos del proveedor' },
+      { name: 'GitHub Actions', role: 'Ejecución programada diaria' },
+      { name: 'Netlify', role: 'CDN y despliegue continuo' },
+      { name: 'Tailwind CSS', role: 'Estilos' },
     ],
     pipeline: [
-      'GitHub Actions ejecuta cron job diario a las 07:00 UTC de forma programada',
-      'daily-scraper.py recorre el sitio del proveedor con BeautifulSoup extrayendo nombres, descripciones, precios, imágenes y categorías',
-      'Batch processing con retry logic automático para manejar rate limits del proveedor sin intervención',
-      'El scraper actualiza data/products.json y hace commit automático al repositorio',
-      'Netlify detecta el nuevo commit y lanza rebuild de Next.js automáticamente',
-      'Next.js genera export estático: +1,000 páginas de producto + categorías + landing pages geo-segmentadas (Quito, Guayaquil, Cuenca, Manta)',
-      'Sitemap XML se regenera con fechas reales en cada build para evitar señales falsas de re-crawl en Google',
+      'GitHub Actions ejecuta el flujo cada día a las 07:00 UTC.',
+      'El scraper recorre el sitio del proveedor y extrae nombres, descripciones, precios, imágenes y categorías.',
+      'El procesamiento por lotes reintenta automáticamente cuando el proveedor limita las peticiones.',
+      'El catálogo actualizado se guarda en el repositorio mediante un commit automático.',
+      'Netlify detecta el commit y reconstruye el sitio.',
+      'Next.js genera más de 1.000 páginas de producto, categorías y landing pages por ciudad.',
+      'El sitemap se regenera con fechas de modificación reales.',
     ],
-    features: [
-      'Pipeline 100% autónomo: 0 intervención manual para mantener el catálogo actualizado',
-      'Landing pages geo-segmentadas para Quito, Guayaquil, Cuenca y Manta',
-      '+1,000 redirects 301 auto-generados para preservar link equity en migraciones de slug',
-      'JSON-LD structured data (Product, Organization, BreadcrumbList) en cada página de producto',
-      'Open Graph y Twitter Cards generados dinámicamente en build-time',
-      'Script de descarga masiva de imágenes para onboarding de nuevos productos',
-      'Sitemap XML dinámico con fechas reales para señales de crawl precisas',
-    ],
+    image: promogimmicksImage,
+    imageAlt: 'Página de inicio de PromoGimmicks con productos destacados y botón de consulta',
     githubUrl: 'https://github.com/edt092/promogimmicks-fullstack-commerce',
+    featured: true,
   },
   {
-    id: '3',
     slug: 'contratadata',
     title: 'ContrataData',
-    industry: 'GovTech / Data',
-    image: '/images/project-contratadata.png',
-    tags: ['FastAPI', 'Next.js 14', 'ETL Pipeline', 'PostgreSQL'],
-    problem: 'Contratos públicos colombianos dispersos en SECOP y datos.gov.co sin forma de consolidarlos, normalizarlos ni visualizarlos de manera unificada y analizable.',
-    solution: 'Pipeline ETL incremental en Python con Socrata API, normalización en PostgreSQL/Neon, REST API con FastAPI y dashboard analítico en Next.js con filtros en tiempo real.',
-    result: 'Miles de contratos públicos consolidados y visualizables en tiempo real',
-    featured: true,
-    description: 'ContrataData es una plataforma GovTech que consolida y visualiza contratos del sector público colombiano extraídos de SECOP y datos.gov.co. Implementa un pipeline ETL incremental que procesa solo registros nuevos o modificados, exponiendo los datos normalizados mediante una API REST y un dashboard React con visualizaciones analíticas.',
+    headline: 'Contratación pública consolidada en una API y un panel analítico',
+    sector: 'Datos abiertos · Sector público (Colombia)',
+    services: ['automatizacion-datos'],
+    summary:
+      'Plataforma que extrae, normaliza y expone los contratos públicos de SECOP y datos.gov.co mediante un pipeline ETL incremental, una API REST y un panel de análisis.',
+    problem:
+      'Los datos de contratación pública estaban repartidos entre fuentes con formatos heterogéneos y no había una forma unificada de consultarlos y analizarlos.',
+    solution:
+      'Un pipeline ETL incremental consulta la API Socrata, valida y normaliza los registros en PostgreSQL y los expone mediante una API con FastAPI y un panel en Next.js.',
+    scope: [
+      'Pipeline ETL incremental en Python',
+      'Modelo de datos normalizado en PostgreSQL',
+      'API REST con FastAPI y validación Pydantic',
+      'Panel analítico con filtros en Next.js',
+    ],
+    output: 'Pipeline incremental e idempotente con registro de rechazos, API documentada y panel con filtros combinables.',
+    decisions: [
+      {
+        title: 'Carga incremental',
+        description:
+          'El pipeline guarda la marca de tiempo de la última ejecución y solo extrae registros nuevos o modificados, reduciendo el consumo de cuota de la API.',
+      },
+      {
+        title: 'Rechazos auditables',
+        description:
+          'Los registros que no superan la validación se guardan con su contenido original y el motivo del error, en lugar de descartarse en silencio.',
+      },
+      {
+        title: 'Re-ejecuciones seguras',
+        description:
+          'La carga es idempotente: volver a ejecutar el pipeline tras un fallo no genera duplicados.',
+      },
+    ],
+    outputs: [
+      'Detección automática de carga completa o incremental',
+      'Cinco modelos de datos: entidad, proveedor, contrato, rechazo y metadatos del pipeline',
+      'API paginada con filtros por fecha, entidad, proveedor y estado',
+      'Documentación interactiva de la API generada automáticamente',
+    ],
+    limitations:
+      'Los volúmenes de datos dependen de las fuentes públicas en cada momento; el caso describe la arquitectura, no un indicador de uso.',
     techStack: [
       { name: 'Python 3.12 + SQLAlchemy 2.0', role: 'Pipeline ETL' },
-      { name: 'Socrata API (SODA)', role: 'Extracción de datos gubernamentales' },
+      { name: 'Socrata API (SODA)', role: 'Extracción de datos abiertos' },
       { name: 'PostgreSQL / Neon', role: 'Base de datos normalizada' },
-      { name: 'FastAPI + Pydantic v2', role: 'REST API con validación estricta de tipos' },
-      { name: 'Next.js 14 + TypeScript', role: 'Frontend / App Router' },
-      { name: 'TanStack Query v5', role: 'Caché reactivo y fetching en cliente' },
-      { name: 'shadcn/ui + Tremor', role: 'UI components y charts analíticos' },
+      { name: 'FastAPI + Pydantic v2', role: 'API REST con validación de tipos' },
+      { name: 'Next.js 14 + TypeScript', role: 'Panel de análisis' },
+      { name: 'TanStack Query v5', role: 'Caché y consultas en cliente' },
     ],
     pipeline: [
-      'El extractor consulta SECOP/datos.gov.co vía Socrata API usando el protocolo SODA estándar de datos abiertos',
-      'Modo incremental: la tabla pipeline_meta persiste el último timestamp de ejecución y filtra con $where=:updated_at >= \'<last_run>\' reduciendo consumo de cuota API',
-      'Detección automática full/delta: primera ejecución hace carga completa; subsiguientes solo extraen lo nuevo o modificado',
-      'Etapa de normalización mapea los datos crudos a 5 modelos SQLAlchemy: Entity, Supplier, Contract, RejectedRecord, PipelineMeta',
-      'Validación estricta con Pydantic v2: registros inválidos se almacenan en RejectedRecord con payload raw y metadata de error para auditoría',
-      'Carga idempotente via ON CONFLICT DO NOTHING, segura para re-ejecuciones sin duplicados',
-      'Backfill manual disponible via variable de entorno DATE_FROM para re-procesar rangos históricos específicos',
+      'El extractor consulta SECOP / datos.gov.co mediante la API Socrata.',
+      'Una tabla de metadatos guarda la última ejecución para filtrar solo registros nuevos o modificados.',
+      'La primera ejecución hace una carga completa; las siguientes son incrementales.',
+      'Los registros se normalizan en cinco modelos SQLAlchemy.',
+      'Pydantic valida cada registro; los inválidos se guardan con su payload y el error para auditoría.',
+      'La carga usa ON CONFLICT DO NOTHING, segura ante re-ejecuciones.',
+      'Una variable de entorno permite reprocesar rangos históricos concretos.',
     ],
-    features: [
-      'Pipeline ETL incremental: solo procesa contratos nuevos o modificados desde la última ejecución',
-      'Detección automática de modo full/delta basada en timestamps persistidos en BD',
-      'Carga idempotente (ON CONFLICT DO NOTHING) segura para re-ejecuciones y recuperación de fallos',
-      'API REST paginada con filtros combinables por fecha, entidad pública, proveedor y estado de contrato',
-      'KPIs de entidades públicas, perfiles de proveedores y análisis de tendencias temporales',
-      'Dashboard con tema oscuro/claro implementado sin librerías externas de theming',
-      'Documentación interactiva Swagger auto-generada disponible en /api/docs',
-    ],
+    image: contratadataImage,
+    imageAlt: 'Panel de ContrataData con indicadores de contratación pública, filtros y tabla de contratos',
     githubUrl: 'https://github.com/edt092/contratadata',
-  },
-  {
-    id: '4',
-    slug: 'clinica-dental',
-    title: 'Sonrisa Perfecta',
-    industry: 'Salud',
-    image: '/images/project-dental.jpg',
-    tags: ['Web Development', 'SEO Local', 'Google Ads'],
-    problem: 'Clínica nueva que necesitaba pacientes rápidamente.',
-    solution: 'Estrategia de SEO local agresiva y campaña de Google Ads geolocada.',
-    result: '80+ nuevos pacientes al mes',
-    featured: false,
+    featured: true,
   },
 ];
 
 export const featuredProjects = projects.filter(p => p.featured);
+
+export const getProject = (slug: string) => projects.find(p => p.slug === slug);

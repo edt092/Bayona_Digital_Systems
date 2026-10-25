@@ -1,0 +1,74 @@
+---
+import Layout from '@/components/layout/Layout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import FaqList from '@/components/ui/FaqList.astro';
+import CtaBand from '@/components/ui/CtaBand.astro';
+import { processSteps, generalFaq } from '@/data/process';
+---
+
+<Layout
+  title="Cómo trabajamos: proceso, colaboración y entregables"
+  description="Proceso de trabajo de Bayona Digital Systems: descubrimiento, diseño UX/UI, desarrollo, validación y entrega. Qué recibes en cada fase y qué se necesita de tu equipo."
+>
+  <PageHeader
+    eyebrow="Cómo trabajamos"
+    title="Un proceso con entregables revisables en cada fase"
+    lead="Este es el método propuesto para cada proyecto nuevo. Su objetivo es que las decisiones importantes se tomen con información, antes de invertir en desarrollo."
+    breadcrumbs={[{ label: 'Cómo trabajamos' }]}
+  />
+
+  <section class="section" aria-labelledby="fases-title">
+    <div class="container-site">
+      <h2 id="fases-title" class="sr-only">Fases del proyecto</h2>
+      <ol class="grid gap-6">
+        {processSteps.map(step => (
+          <li class="panel grid gap-6 p-6 md:grid-cols-[5rem_1.2fr_1fr] md:p-8">
+            <span class="font-mono text-2xl text-action">{step.number}</span>
+            <div>
+              <h3 class="text-2xl">{step.title}</h3>
+              <p class="mt-3 text-soft">{step.description}</p>
+            </div>
+            <div class="grid gap-5 border-t border-line pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
+              <div>
+                <h4 class="font-mono text-[0.8125rem] font-medium tracking-[0.04em] text-muted">Qué recibes</h4>
+                <ul class="tick-list mt-3 text-[0.9375rem]">{step.clientGets.map(g => <li>{g}</li>)}</ul>
+              </div>
+              <div>
+                <h4 class="font-mono text-[0.8125rem] font-medium tracking-[0.04em] text-muted">Qué necesitamos de tu equipo</h4>
+                <p class="mt-2 text-[0.9375rem] text-soft">{step.clientProvides}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section border-y border-line bg-surface/40" aria-labelledby="colaboracion-title">
+    <div class="container-site grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 id="colaboracion-title" class="text-[clamp(1.5rem,3vw,2rem)]">Colaboración y responsabilidad</h2>
+        <p class="measure mt-4 text-soft">
+          Edwin Bayona es el interlocutor técnico durante todo el proyecto. Si una parte del trabajo requiere a otra
+          persona, se indica en la propuesta junto con su responsabilidad.
+        </p>
+      </div>
+      <ul class="tick-list">
+        <li>Alcance, supuestos y exclusiones por escrito antes de empezar.</li>
+        <li>Revisiones periódicas sobre una versión de prueba, con frecuencia acordada.</li>
+        <li>Código, dominio y servicios en cuentas de tu empresa, según se acuerde.</li>
+        <li>Documentación de decisiones técnicas y de operación al entregar.</li>
+        <li>Soporte y mantenimiento posteriores acordados por separado, si los necesitas.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-title">
+    <div class="container-site grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <h2 id="faq-title" class="text-[clamp(1.5rem,3vw,2rem)]">Preguntas frecuentes</h2>
+      <FaqList items={generalFaq} />
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

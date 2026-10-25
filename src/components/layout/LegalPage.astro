@@ -1,0 +1,25 @@
+---
+import Layout from './Layout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  updated: string;
+}
+
+const { title, description, updated } = Astro.props;
+---
+
+<Layout {title} {description}>
+  <PageHeader title={title} breadcrumbs={[{ label: title }]}>
+    <p class="mt-4 text-[0.9375rem] text-muted">Última actualización: {updated}</p>
+  </PageHeader>
+  <section class="section">
+    <div class="container-site">
+      <div class="prose-site">
+        <slot />
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,27 @@
+---
+import Layout from '@/components/layout/Layout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import CaseCard from '@/components/ui/CaseCard.astro';
+import CtaBand from '@/components/ui/CtaBand.astro';
+import { projects } from '@/data/projects';
+---
+
+<Layout
+  title="Casos de estudio: catálogos B2B, automatización y datos"
+  description="Casos de estudio de Bayona Digital Systems: catálogos B2B generados de forma automatizada, pipelines de datos diarios y una plataforma de datos de contratación pública."
+>
+  <PageHeader
+    eyebrow="Casos de estudio"
+    title="Proyectos con el problema, las decisiones y el resultado a la vista"
+    lead="Cada caso separa el resultado técnico documentado de cualquier afirmación comercial. Donde hay repositorio público, puedes revisar el código."
+    breadcrumbs={[{ label: 'Casos de estudio' }]}
+  />
+
+  <section class="section" aria-label="Listado de casos">
+    <div class="container-site grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {projects.map(project => <CaseCard project={project} headingLevel="h2" />)}
+    </div>
+  </section>
+
+  <CtaBand />
+</Layout>

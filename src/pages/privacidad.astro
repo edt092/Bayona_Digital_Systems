@@ -1,0 +1,63 @@
+---
+import LegalPage from '@/components/layout/LegalPage.astro';
+import { site } from '@/data/site';
+---
+
+<LegalPage
+  title="Política de privacidad"
+  description="Qué datos trata el sitio de Bayona Digital Systems, con qué finalidad y cómo ejercer tus derechos."
+  updated="25 de octubre de 2026"
+>
+  <p>
+    Esta política explica qué datos personales se tratan cuando visitas este sitio o escribes a Bayona Digital Systems.
+    Para cualquier consulta sobre privacidad puedes escribir a <a href={`mailto:${site.email}`}>{site.email}</a>.
+  </p>
+
+  <h2>Datos que este sitio no recoge</h2>
+  <p>
+    El sitio no tiene formularios que guarden información, no usa herramientas de analítica ni publicidad y no
+    instala cookies propias. El asistente de la página de contacto solo prepara un borrador de correo en tu
+    navegador: no guarda ni envía lo que escribes.
+  </p>
+
+  <h2>Correos que nos envías</h2>
+  <p>
+    Si escribes a <a href={`mailto:${site.email}`}>{site.email}</a>, se tratan los datos que incluyas en el mensaje
+    (por ejemplo, tu nombre, tu dirección de correo, tu empresa y la descripción de tu proyecto) con una única
+    finalidad: responder a tu consulta y, si ambas partes lo deciden, preparar una propuesta.
+  </p>
+  <ul>
+    <li>No se usan para enviarte publicidad ni se ceden a terceros con fines comerciales.</li>
+    <li>Se conservan mientras sean necesarios para atender la consulta o la relación profesional que se derive de ella.</li>
+    <li>No incluyas información confidencial en el primer mensaje; si hace falta, se acuerda un canal adecuado.</li>
+  </ul>
+
+  <h2>Servicios de terceros que intervienen al visitar el sitio</h2>
+  <ul>
+    <li>
+      <strong>Alojamiento (Netlify):</strong> el sitio se sirve desde la infraestructura de Netlify, que registra
+      datos técnicos de las peticiones, como la dirección IP y el navegador, para entregar las páginas y proteger el
+      servicio.
+    </li>
+    <li>
+      <strong>Tipografías (Google Fonts):</strong> las fuentes del sitio se cargan desde servidores de Google, que
+      reciben la dirección IP de tu dispositivo al solicitarlas.
+    </li>
+    <li>
+      <strong>Enlaces externos:</strong> algunos casos de estudio enlazan a repositorios en GitHub. Al abrirlos se
+      aplica la política de privacidad de ese servicio.
+    </li>
+  </ul>
+
+  <h2>Tus derechos</h2>
+  <p>
+    Puedes pedir el acceso, la corrección o la eliminación de los datos que nos hayas enviado por correo, u oponerte
+    a su tratamiento, escribiendo a <a href={`mailto:${site.email}`}>{site.email}</a>.
+  </p>
+
+  <h2>Cambios en esta política</h2>
+  <p>
+    Si el sitio incorpora nuevas funciones que traten datos (por ejemplo, un formulario o una agenda de reuniones),
+    esta política se actualizará antes de activarlas, indicando la fecha de la última modificación.
+  </p>
+</LegalPage>

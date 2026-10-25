@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string;
+  steps: { label: string; detail?: string }[];
+}
+
+const { title, steps } = Astro.props;
+const rows = Math.ceil(steps.length / 2);
+---
+
+<div class="panel bg-surface/95 p-5 backdrop-blur md:p-6">
+  <p class="font-mono text-[0.8125rem] text-muted">{title}</p>
+  <ol class="pipeline mt-4 grid gap-0 sm:grid-cols-2 sm:gap-x-6" style={`--rows: ${rows}`}>
+    {steps.map((step, i) => (
+      <li class:list={['pipeline-step relative flex gap-3 pb-4', { 'is-column-end': i === rows - 1 }]}>
+        <span class="pipeline-index relative z-10 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-control bg-base font-mono text-xs text-action">
+          {String(i + 1).padStart(2, '0')}
+        </span>
+        <span class="min-w-0">
+          <span class="block font-display text-[0.9375rem] font-semibold leading-snug text-ink">{step.label}</span>
+          {step.detail && <span class="block text-sm text-muted">{step.detail}</span>}
+        </span>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  /* Conector vertical entre pasos (una columna) */
+  .pipeline-step:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 0.875rem;
+    top: 1.75rem;
+    bottom: 0;
+    width: 1px;
+    background: var(--color-control);
+  }
+  @media (min-width: 640px) {
+    .pipeline { grid-auto-flow: column; grid-template-rows: repeat(var(--rows), auto); }
+    .pipeline-step.is-column-end::before { display: none; }
+  }
+</style>

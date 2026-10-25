@@ -1,0 +1,147 @@
+---
+import Layout from '@/components/layout/Layout.astro';
+import PageHeader from '@/components/ui/PageHeader.astro';
+import CaseCard from '@/components/ui/CaseCard.astro';
+import FaqList from '@/components/ui/FaqList.astro';
+import CtaBand from '@/components/ui/CtaBand.astro';
+import { services } from '@/data/services';
+import { processSteps } from '@/data/process';
+import { getProject } from '@/data/projects';
+import type { Project } from '@/types';
+
+export function getStaticPaths() {
+  return services.map(service => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const related = service.relatedProjects.map(getProject).filter((p): p is Project => Boolean(p));
+const contactHref = `/contacto/?servicio=${service.slug}`;
+---
+
+<Layout title={service.headline} description={service.summary}>
+  <PageHeader
+    eyebrow={service.title}
+    title={service.headline}
+    lead={service.summary}
+    breadcrumbs={[{ label: 'Servicios', href: '/servicios/' }, { label: service.title }]}
+  >
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <a href={contactHref} class="btn btn-primary">Hablemos de tu proyecto</a>
+      <a href="#casos" class="btn btn-secondary">Ver casos relacionados</a>
+    </div>
+  </PageHeader>
+
+  <!-- Para quién -->
+  <section class="section" aria-labelledby="encaje-title">
+    <div class="container-site">
+      <h2 id="encaje-title" class="text-[clamp(1.5rem,3vw,2rem)]">¿Cuándo conviene?</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2">
+        <div class="panel p-6">
+          <h3 class="text-lg">Encaja si…</h3>
+          <ul class="tick-list mt-4 text-[0.9375rem]">
+            {service.forWho.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="panel p-6">
+          <h3 class="text-lg">No es el servicio adecuado para…</h3>
+          <ul class="tick-list is-muted mt-4 text-[0.9375rem]">
+            {service.notFor.map(item => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Escenarios -->
+  <section class="section border-y border-line bg-surface/40" aria-labelledby="escenarios-title">
+    <div class="container-site">
+      <h2 id="escenarios-title" class="text-[clamp(1.5rem,3vw,2rem)]">Escenarios habituales</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {service.scenarios.map(s => (
+          <article class="border-t-2 border-action pt-5">
+            <h3 class="text-lg">{s.title}</h3>
+            <p class="mt-2 text-[0.9375rem] text-soft">{s.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Alcance -->
+  <section class="section" aria-labelledby="alcance-title">
+    <div class="container-site">
+      <h2 id="alcance-title" class="text-[clamp(1.5rem,3vw,2rem)]">Alcance</h2>
+      <div class="mt-8 grid gap-6 lg:grid-cols-3">
+        <div class="panel p-6">
+          <h3 class="text-lg">Incluido</h3>
+          <ul class="tick-list mt-4 text-[0.9375rem]">{service.includes.map(i => <li>{i}</li>)}</ul>
+        </div>
+        <div class="panel p-6">
+          <h3 class="text-lg">Fuera de alcance</h3>
+          <ul class="tick-list is-muted mt-4 text-[0.9375rem]">{service.excludes.map(i => <li>{i}</li>)}</ul>
+        </div>
+        <div class="panel p-6">
+          <h3 class="text-lg">Qué necesitamos de tu equipo</h3>
+          <ul class="tick-list is-muted mt-4 text-[0.9375rem]">{service.dependencies.map(i => <li>{i}</li>)}</ul>
+        </div>
+      </div>
+
+      <h3 class="mt-14 text-xl">Entregables</h3>
+      <dl class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {service.deliverables.map(d => (
+          <div class="border-l-2 border-action pl-4">
+            <dt class="font-display font-semibold text-ink">{d.title}</dt>
+            <dd class="mt-1 text-[0.9375rem] text-soft">{d.description}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- Proceso y calidad -->
+  <section class="section border-y border-line bg-surface/40" aria-labelledby="proceso-title">
+    <div class="container-site grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 id="proceso-title" class="text-[clamp(1.5rem,3vw,2rem)]">Puntos de revisión contigo</h2>
+        <ol class="mt-8 space-y-4">
+          {processSteps.map(step => (
+            <li class="flex gap-4">
+              <span class="font-mono text-sm text-action pt-0.5">{step.number}</span>
+              <div>
+                <p class="font-display font-semibold text-ink">{step.title}</p>
+                <p class="text-[0.9375rem] text-soft">{step.clientGets.join(' · ')}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <a href="/como-trabajamos/" class="text-link mt-6 inline-block">Cómo trabajamos en detalle</a>
+      </div>
+      <div>
+        <h2 class="text-[clamp(1.5rem,3vw,2rem)]">Criterios de calidad</h2>
+        <ul class="tick-list mt-8">
+          {service.qualityCriteria.map(c => <li>{c}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Casos -->
+  <section id="casos" class="section" aria-labelledby="casos-title">
+    <div class="container-site">
+      <h2 id="casos-title" class="text-[clamp(1.5rem,3vw,2rem)]">Casos relacionados</h2>
+      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {related.map(project => <CaseCard project={project} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section pt-0" aria-labelledby="faq-title">
+    <div class="container-site grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <h2 id="faq-title" class="text-[clamp(1.5rem,3vw,2rem)]">Preguntas frecuentes</h2>
+      <FaqList items={service.faq} />
+    </div>
+  </section>
+
+  <CtaBand ctaHref={contactHref} />
+</Layout>

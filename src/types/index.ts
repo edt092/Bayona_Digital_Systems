@@ -1,64 +1,58 @@
+import type { ImageMetadata } from 'astro';
+
+export type ServiceSlug = 'productos-web' | 'automatizacion-datos';
+
 export interface Service {
-  id: string;
-  icon: string;
+  slug: ServiceSlug;
   title: string;
-  description: string;
-  benefits: string[];
-  problem: string;
-  cta: string;
-  color: string;
+  /** Titular orientado a la necesidad, usado como H1 en la página del servicio */
+  headline: string;
+  summary: string;
+  forWho: string[];
+  notFor: string[];
+  scenarios: { title: string; description: string }[];
+  includes: string[];
+  excludes: string[];
+  dependencies: string[];
+  deliverables: { title: string; description: string }[];
+  qualityCriteria: string[];
+  relatedProjects: string[];
+  faq: FaqItem[];
 }
 
 export interface Project {
-  id: string;
   slug: string;
   title: string;
-  industry: string;
-  image: string;
-  tags: string[];
+  /** Reto resuelto, usado como H1 del caso */
+  headline: string;
+  sector: string;
+  services: ServiceSlug[];
+  summary: string;
   problem: string;
   solution: string;
-  result: string;
-  featured: boolean;
-  description?: string;
-  techStack?: { name: string; role: string }[];
-  pipeline?: string[];
-  features?: string[];
+  scope: string[];
+  /** Resultado técnico documentado; no es un resultado comercial */
+  output: string;
+  decisions: { title: string; description: string }[];
+  outputs: string[];
+  limitations: string;
+  techStack: { name: string; role: string }[];
+  pipeline: string[];
+  image: ImageMetadata;
+  imageAlt: string;
   githubUrl?: string;
-}
-
-export interface Testimonial {
-  id: string;
-  name: string;
-  role: string;
-  company: string;
-  avatar: string;
-  quote: string;
-  result: string;
-  rating: number;
-}
-
-export interface Technology {
-  name: string;
-  icon: string;
-  category: 'frontend' | 'backend' | 'marketing' | 'tools';
+  featured: boolean;
 }
 
 export interface ProcessStep {
   number: string;
   title: string;
   description: string;
-  icon: string;
-  deliverables: string[];
+  clientGets: string[];
+  clientProvides: string;
 }
 
-export interface Stat {
-  value: string;
-  label: string;
-  suffix?: string;
-}
-
-export interface NavLink {
-  label: string;
-  href: string;
+export interface FaqItem {
+  question: string;
+  answer: string;
 }

@@ -1,71 +1,60 @@
 ---
+import { site } from '@/data/site';
+
 interface Props {
   title?: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
   noindex?: boolean;
   type?: 'website' | 'article';
 }
 
 const {
-  title = 'Bayona Digital Systems — Desarrollo Web, SEO & Marketing Digital',
-  description = 'Ayudo a negocios y marcas personales a crecer mediante desarrollo web profesional, SEO y marketing digital. Sitios que convierten visitantes en clientes.',
-  image = '/og-image.jpg',
+  title = `${site.name} — ${site.tagline}`,
+  description = site.description,
+  image = '/og-image.png',
+  imageAlt = `${site.name}: ${site.tagline}`,
   noindex = false,
   type = 'website',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const fullTitle = title.includes('Bayona') ? title : `${title} | Bayona Digital Systems`;
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const imageURL = new URL(image, Astro.site);
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: site.name,
+  url: site.url,
+  description: site.description,
+  email: site.email,
+  logo: new URL('/favicon.svg', Astro.site).toString(),
+  serviceType: ['Desarrollo de productos web', 'Automatización e integración de datos'],
+  founder: { '@type': 'Person', name: site.lead },
+  sameAs: [site.github],
+};
 ---
 
-<!-- Primary -->
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
-<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Open Graph -->
 <meta property="og:type" content={type} />
 <meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.site)} />
-<meta property="og:site_name" content="Bayona Digital Systems" />
+<meta property="og:image" content={imageURL} />
+<meta property="og:image:alt" content={imageAlt} />
+<meta property="og:site_name" content={site.name} />
 <meta property="og:locale" content="es_ES" />
 
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={new URL(image, Astro.site)} />
+<meta name="twitter:image" content={imageURL} />
+<meta name="twitter:image:alt" content={imageAlt} />
 
-<!-- Schema Person -->
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Bayona Digital Systems",
-    "url": "https://bayonadigitalsystems.com",
-    "jobTitle": "Web Developer & Digital Marketing Specialist",
-    "description": "Desarrollador web y especialista en marketing digital enfocado en resultados medibles.",
-    "sameAs": [
-      "https://linkedin.com/in/bayonadigital",
-      "https://github.com/bayonadigital"
-    ]
-  }
-</script>
-
-<!-- Schema ProfessionalService -->
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Bayona Digital Systems",
-    "description": "Desarrollo web, SEO y marketing digital para negocios y marcas personales.",
-    "url": "https://bayonadigitalsystems.com",
-    "areaServed": "Worldwide",
-    "serviceType": ["Web Development", "SEO", "Digital Marketing"],
-    "priceRange": "$$"
-  }
-</script>
+<script type="application/ld+json" set:html={JSON.stringify(organization)} />
