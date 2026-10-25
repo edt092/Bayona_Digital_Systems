@@ -15,7 +15,7 @@
 
 Hay variables de Supabase/EmailJS en `.env`, pero la integración era solo de cliente (sin validación en servidor ni reserva atómica) y no se puede comprobar la recepción sin enviar datos reales. Se aplicó la rama **"sin integración verificable"** del encargo:
 
-- `/contacto/` muestra el correo publicado en el repo (`hola@bayonadigitalsystems.com`), un `mailto:` visible y un botón para copiar la dirección.
+- `/contacto/` muestra el correo publicado en el repo (`info@bayonadigitalsystems.com`, confirmado por el propietario), un `mailto:` visible y un botón para copiar la dirección.
 - El asistente "Prepara tu mensaje" (mejora progresiva, oculto sin JS) valida los campos y abre un borrador `mailto:`. **Nunca muestra "enviado"**: avisa de que el mensaje aún no se ha enviado y conserva los datos.
 - Se eliminaron `BookingModal.astro` y el SDK global de EmailJS. Ningún CTA promete reserva instantánea.
 
@@ -58,7 +58,7 @@ Hay variables de Supabase/EmailJS en `.env`, pero la integración era solo de cl
 
 ## 6. Pendientes reales (requieren al propietario)
 
-1. **Confirmar que `hola@bayonadigitalsystems.com` recibe correo** y quién responde. El copy dice que "Edwin Bayona revisa cada mensaje": ajustarlo si no es así.
+1. **Confirmar que `info@bayonadigitalsystems.com` recibe correo** y quién responde. El copy dice que "Edwin Bayona revisa cada mensaje": ajustarlo si no es así.
 2. **Agenda/formulario con backend:** si se quiere reactivar, hace falta validación en servidor, reserva atómica, confirmación solo tras guardar y actualizar la política de privacidad antes de activarlo.
 3. **LinkedIn:** resuelto. El propietario confirmó `linkedin.com/in/edwin-johan-bayona-4aa4b5428/` (añadido en schema, footer y bio).
 4. **Evidencia de casos:** confirmar permiso para mostrar nombres y capturas de KS Promocionales y PromoGimmicks, el rol exacto en cada proyecto, y si las cifras 2.096 / 2.008 / +1.000 siguen vigentes. Fechas y resultados comerciales se omitieron por falta de datos.

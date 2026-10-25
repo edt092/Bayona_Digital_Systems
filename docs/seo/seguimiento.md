@@ -25,7 +25,7 @@
 | Consultas de marca: impresiones / clics | GSC → Rendimiento (filtro "bayona") | | | |
 | Consultas sin marca: impresiones / clics / posición | GSC → Rendimiento | | | |
 | CTR por página (con posición y dispositivo) | GSC → Rendimiento | | | |
-| Correos recibidos y correos cualificados por servicio | Bandeja `hola@` (registro manual) | | | |
+| Correos recibidos y correos cualificados por servicio | Bandeja `info@` (registro manual) | | | |
 | LCP / INP / CLS p75 móvil | CrUX o RUM, si hay muestra suficiente | | | |
 
 Notas de interpretación:

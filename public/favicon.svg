@@ -1,11 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <rect width="48" height="48" rx="10" fill="#152238"/>
-  <g transform="translate(8.5 10) scale(0.82)" fill="#F8FAFC">
-    <rect x="0" y="0" width="5.5" height="34"/>
-    <rect x="0" y="0" width="20" height="5"/>
-    <rect x="0" y="14.5" width="13" height="5"/>
-    <rect x="0" y="29" width="20" height="5"/>
-    <path d="M26,0 L31,0 A8.5,8.5 0 0,1 31,17 L26,17 L31,17 A8.5,8.5 0 0,1 31,34 L26,34 Z"/>
-  </g>
-  <rect x="39" y="39" width="5" height="5" rx="1.25" fill="#BEF264"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="96" fill="#0B1220"/><g transform="translate(-106.6 -114.3) scale(1.0215)"><path fill="#F8FAFC" d="M168 157H408C455 157 491 194 492 248C492 288 487 313 476 330C512 346 539 386 539 434C539 507 484 568 410 568H175L286 487H400C445 487 466 455 466 418C466 381 438 348 394 331C411 315 418 296 418 279C418 254 401 238 378 238H278Z"/><path fill="#F8FAFC" d="M182 224L396 372L182 521V458L280 388V357L182 287Z"/><path fill="#C2FB0C" stroke="#C2FB0C" stroke-width="10" stroke-linejoin="round" d="M186 318L253 372L186 426Z"/></g></svg>
