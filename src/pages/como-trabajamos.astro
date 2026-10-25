@@ -4,11 +4,13 @@ import PageHeader from '@/components/ui/PageHeader.astro';
 import FaqList from '@/components/ui/FaqList.astro';
 import CtaBand from '@/components/ui/CtaBand.astro';
 import { processSteps, generalFaq } from '@/data/process';
+import { projects } from '@/data/projects';
+import { site } from '@/data/site';
 ---
 
 <Layout
-  title="Cómo trabajamos: proceso, colaboración y entregables"
-  description="Proceso de trabajo de Bayona Digital Systems: descubrimiento, diseño UX/UI, desarrollo, validación y entrega. Qué recibes en cada fase y qué se necesita de tu equipo."
+  title="Cómo trabajamos: proceso y entregables"
+  description="Proceso de trabajo en cinco fases: descubrimiento, diseño UX/UI, desarrollo, validación y entrega. Qué recibes en cada una y qué necesitamos de tu equipo."
 >
   <PageHeader
     eyebrow="Cómo trabajamos"
@@ -63,7 +65,37 @@ import { processSteps, generalFaq } from '@/data/process';
     </div>
   </section>
 
-  <section class="section" aria-labelledby="faq-title">
+  <section class="section" aria-labelledby="responsable-title">
+    <div class="container-site grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <h2 id="responsable-title" class="text-[clamp(1.5rem,3vw,2rem)]">Responsable técnico</h2>
+      <div class="measure space-y-4 text-soft">
+        <p>
+          <strong class="text-ink">Edwin Bayona</strong> es el responsable técnico de Bayona Digital Systems y la persona
+          con la que hablas desde el primer mensaje hasta la entrega.
+        </p>
+        <p>
+          Su trabajo publicado combina desarrollo web y datos: catálogos generados de forma estática con Next.js,
+          pipelines de extracción en Python, bases de datos PostgreSQL, automatizaciones con GitHub Actions y APIs con
+          FastAPI. Puedes revisarlo en los casos de estudio y en los repositorios públicos.
+        </p>
+        <ul class="tick-list text-[0.9375rem]">
+          {projects.map(p => (
+            <li><a href={`/proyectos/${p.slug}/`} class="text-link">{p.title}</a>: {p.headline.charAt(0).toLowerCase() + p.headline.slice(1)}</li>
+          ))}
+        </ul>
+        <p class="flex flex-wrap gap-x-6 gap-y-2">
+          <a href={site.linkedin} class="text-link" target="_blank" rel="noopener noreferrer">
+            LinkedIn de Edwin Bayona<span class="sr-only"> (se abre en una pestaña nueva)</span>
+          </a>
+          <a href={site.github} class="text-link" target="_blank" rel="noopener noreferrer">
+            GitHub de Edwin Bayona<span class="sr-only"> (se abre en una pestaña nueva)</span>
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0" aria-labelledby="faq-title">
     <div class="container-site grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
       <h2 id="faq-title" class="text-[clamp(1.5rem,3vw,2rem)]">Preguntas frecuentes</h2>
       <FaqList items={generalFaq} />

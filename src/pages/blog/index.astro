@@ -9,7 +9,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 ---
 
 <Layout
-  title="Blog: productos web, automatización y datos"
+  title="Blog: productos web y datos"
   description="Artículos de Bayona Digital Systems sobre desarrollo de productos web, automatización e integración de datos."
   noindex={posts.length === 0}
 >

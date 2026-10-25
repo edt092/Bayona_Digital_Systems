@@ -1,11 +1,13 @@
 ---
-import { Image, getImage } from 'astro:assets';
+import { Image } from 'astro:assets';
 import Layout from '@/components/layout/Layout.astro';
 import PageHeader from '@/components/ui/PageHeader.astro';
 import CtaBand from '@/components/ui/CtaBand.astro';
 import { projects } from '@/data/projects';
 import { getService } from '@/data/services';
 import type { Service } from '@/types';
+import { site } from '@/data/site';
+import { caseStudyNode } from '@/lib/seo';
 
 export function getStaticPaths() {
   return projects.map((project, i) => ({
@@ -16,15 +18,31 @@ export function getStaticPaths() {
 
 const { project, next } = Astro.props;
 const relatedServices = project.services.map(getService).filter((s): s is Service => Boolean(s));
-const ogImage = await getImage({ src: project.image, width: 1200, format: 'png' });
+// OG 1200×630 generada en build por src/pages/og/[slug].jpg.ts
+const ogImage = `/og/${project.slug}.jpg`;
+const pageUrl = new URL(`/proyectos/${project.slug}/`, Astro.site).toString();
+const schema = [
+  caseStudyNode(site.url, {
+    name: project.title,
+    headline: project.headline,
+    description: project.summary,
+    url: pageUrl,
+    image: new URL(ogImage, Astro.site).toString(),
+    about: relatedServices.map(s => s.title),
+    repository: project.githubUrl,
+  }),
+];
 const contactHref = `/contacto/?servicio=${project.services[0]}`;
 ---
 
 <Layout
-  title={`${project.title}: ${project.headline}`}
+  title={project.seoTitle}
   description={project.summary}
-  image={ogImage.src}
+  image={ogImage}
   imageAlt={project.imageAlt}
+  imageWidth={1200}
+  imageHeight={630}
+  schema={schema}
   type="article"
 >
   <PageHeader

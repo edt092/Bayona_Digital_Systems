@@ -8,9 +8,14 @@ import { featuredProjects, getProject } from '@/data/projects';
 import { services } from '@/data/services';
 import { processSteps, generalFaq } from '@/data/process';
 import { site } from '@/data/site';
+import { websiteNode } from '@/lib/seo';
 ---
 
-<Layout title={`${site.name} — ${site.tagline}`} description={site.description}>
+<Layout
+  title="Desarrollo web B2B y automatización"
+  description="Desarrollo de catálogos y plataformas web B2B y automatización de datos: pipelines, integraciones y paneles. Casos reales con código público."
+  schema={[websiteNode(site.url, site.name)]}
+>
   <Hero />
 
   <!-- Casos destacados -->

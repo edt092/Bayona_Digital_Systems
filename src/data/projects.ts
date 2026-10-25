@@ -7,6 +7,8 @@ export const projects: Project[] = [
   {
     slug: 'ks-promocionales',
     title: 'KS Promocionales',
+    seoTitle: 'KS Promocionales: catálogo B2B automatizado',
+    updated: '2026-10-25',
     headline: 'Un catálogo B2B automatizado con generación estática de páginas',
     sector: 'Comercio B2B · Productos promocionales (Ecuador)',
     services: ['productos-web', 'automatizacion-datos'],
@@ -74,6 +76,8 @@ export const projects: Project[] = [
   {
     slug: 'promogimmicks',
     title: 'PromoGimmicks',
+    seoTitle: 'PromoGimmicks: catálogo actualizado a diario',
+    updated: '2026-10-25',
     headline: 'Un catálogo de e-commerce que se actualiza a diario sin pasos manuales',
     sector: 'Comercio electrónico · Productos promocionales (Ecuador)',
     services: ['automatizacion-datos', 'productos-web'],
@@ -140,6 +144,8 @@ export const projects: Project[] = [
   {
     slug: 'contratadata',
     title: 'ContrataData',
+    seoTitle: 'ContrataData: datos de contratación pública',
+    updated: '2026-10-25',
     headline: 'Contratación pública consolidada en una API y un panel analítico',
     sector: 'Datos abiertos · Sector público (Colombia)',
     services: ['automatizacion-datos'],

@@ -1,4 +1,6 @@
 ---
+import { serializeJsonLd } from '@/lib/seo';
+
 interface Crumb {
   label: string;
   href?: string;
@@ -52,5 +54,5 @@ const breadcrumbSchema = trail.length
     {lead && <p class="lead measure mt-5">{lead}</p>}
     <slot />
   </div>
-  {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
+  {breadcrumbSchema && <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)} />}
 </header>

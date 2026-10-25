@@ -7,6 +7,7 @@ export const site = {
   email: 'hola@bayonadigitalsystems.com',
   lead: 'Edwin Bayona',
   github: 'https://github.com/edt092',
+  linkedin: 'https://www.linkedin.com/in/edwin-johan-bayona-4aa4b5428/',
 };
 
 export const mainNav = [

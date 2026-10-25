@@ -4,9 +4,14 @@ export const services: Service[] = [
   {
     slug: 'productos-web',
     title: 'Productos web B2B',
-    headline: 'Plataformas y catálogos web para vender y operar en B2B',
+    seoTitle: 'Desarrollo de catálogos web B2B',
+    seoDescription:
+      'Desarrollo de catálogos y plataformas web B2B conectados a tus datos, con SEO técnico y rendimiento definidos. Alcance, entregables y casos reales.',
+    serviceType: 'Desarrollo de catálogos y plataformas web B2B',
+    updated: '2026-10-25',
+    headline: 'Desarrollo de catálogos y plataformas web B2B',
     summary:
-      'Diseño y desarrollo de sitios, catálogos y plataformas web conectados a tus datos, con SEO técnico y rendimiento definidos desde el inicio.',
+      'Diseño y desarrollo de catálogos, sitios comerciales y plataformas web B2B conectados a tus datos, con SEO técnico y rendimiento definidos desde el inicio.',
     forWho: [
       'Empresas con un catálogo amplio que necesitan publicarlo y mantenerlo sin trabajo manual',
       'Equipos comerciales que necesitan un canal web que genere solicitudes de cotización',
@@ -75,6 +80,11 @@ export const services: Service[] = [
           'El plazo depende del alcance, de las fuentes de datos y de la disponibilidad de contenido. Se estima después de la conversación inicial, con los supuestos por escrito.',
       },
       {
+        question: '¿Se puede conectar el catálogo con nuestro sistema de inventario?',
+        answer:
+          'Depende de cómo exponga los datos tu sistema: API, exportaciones periódicas o acceso a base de datos. Se evalúa en el descubrimiento. Los catálogos publicados en los casos se alimentan del sitio web del proveedor y de una base de datos PostgreSQL.',
+      },
+      {
         question: '¿De quién es el código?',
         answer:
           'El código y los accesos se entregan en repositorios y cuentas a nombre de tu empresa, según se acuerde en la propuesta.',
@@ -84,9 +94,14 @@ export const services: Service[] = [
   {
     slug: 'automatizacion-datos',
     title: 'Automatización e integración de datos',
-    headline: 'Pipelines, integraciones y paneles que eliminan trabajo manual',
+    seoTitle: 'Automatización e integración de datos',
+    seoDescription:
+      'Automatización de catálogos e integración de datos: pipelines ETL programados, validación, APIs y paneles. Alcance, entregables y casos reales.',
+    serviceType: 'Automatización e integración de datos',
+    updated: '2026-10-25',
+    headline: 'Automatización de catálogos e integración de datos',
     summary:
-      'Extracción, normalización y sincronización de datos entre sistemas, con procesos programados, validación y paneles para consultar la información.',
+      'Pipelines que extraen, validan y sincronizan datos entre sistemas —catálogos de proveedores, fuentes públicas y bases de datos— con procesos programados, APIs y paneles de consulta.',
     forWho: [
       'Equipos que copian datos a mano entre sistemas, hojas de cálculo y sitios web',
       'Empresas que dependen de datos de proveedores o fuentes públicas que cambian con frecuencia',
@@ -147,6 +162,11 @@ export const services: Service[] = [
         question: '¿Qué pasa si la fuente de datos cambia?',
         answer:
           'Las validaciones detectan cambios de formato y registran los registros afectados. El mantenimiento posterior se acuerda según la frecuencia de cambios esperada.',
+      },
+      {
+        question: '¿Qué fuentes de datos se han automatizado en los casos publicados?',
+        answer:
+          'Catálogos web de proveedores (extracción con Python), la API pública Socrata de datos.gov.co y bases de datos PostgreSQL. Otras fuentes se evalúan en el descubrimiento según su formato y condiciones de uso.',
       },
       {
         question: '¿Dónde se ejecutan los procesos?',

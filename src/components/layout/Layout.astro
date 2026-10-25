@@ -3,14 +3,20 @@ import SEO from './SEO.astro';
 import Navbar from './Navbar.astro';
 import Footer from './Footer.astro';
 import '@/styles/global.css';
+import interFont from '@/assets/fonts/inter-latin-var.woff2?url';
+import displayFont from '@/assets/fonts/space-grotesk-latin-var.woff2?url';
 
 interface Props {
   title?: string;
+  brand?: boolean;
   description?: string;
   image?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   noindex?: boolean;
   type?: 'website' | 'article';
+  schema?: object[];
 }
 
 const props = Astro.props;
@@ -24,12 +30,8 @@ const props = Astro.props;
     <meta name="theme-color" content="#0B1220" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap"
-    />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interFont} as="font" type="font/woff2" crossorigin />
     <SEO {...props} />
   </head>
   <body>

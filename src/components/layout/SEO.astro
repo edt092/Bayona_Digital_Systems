@@ -1,40 +1,52 @@
 ---
 import { site } from '@/data/site';
+import { buildTitle, graph, organizationGraph, serializeJsonLd } from '@/lib/seo';
 
 interface Props {
+  /** Título sin marca; la marca se añade según la política de buildTitle */
   title?: string;
+  /** false si el título ya incluye la marca */
+  brand?: boolean;
   description?: string;
   image?: string;
   imageAlt?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   noindex?: boolean;
   type?: 'website' | 'article';
+  /** Nodos JSON-LD propios de la página; se suman a la organización en un único @graph */
+  schema?: object[];
 }
 
 const {
-  title = `${site.name} — ${site.tagline}`,
+  title = site.tagline,
+  brand = true,
   description = site.description,
   image = '/og-image.png',
   imageAlt = `${site.name}: ${site.tagline}`,
+  imageWidth = 1200,
+  imageHeight = 630,
   noindex = false,
   type = 'website',
+  schema = [],
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const fullTitle = buildTitle(title, { brand });
 const imageURL = new URL(image, Astro.site);
 
-const organization = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: site.name,
-  url: site.url,
-  description: site.description,
-  email: site.email,
-  logo: new URL('/favicon.svg', Astro.site).toString(),
-  serviceType: ['Desarrollo de productos web', 'Automatización e integración de datos'],
-  founder: { '@type': 'Person', name: site.lead },
-  sameAs: [site.github],
-};
+const jsonLd = graph([
+  ...organizationGraph({
+    siteUrl: site.url,
+    name: site.name,
+    description: site.description,
+    email: site.email,
+    logoUrl: new URL('/logo-512.png', Astro.site).toString(),
+    lead: site.lead,
+    leadSameAs: [site.linkedin, site.github],
+  }),
+  ...schema,
+]);
 ---
 
 <title>{fullTitle}</title>
@@ -47,6 +59,8 @@ const organization = {
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageURL} />
+<meta property="og:image:width" content={String(imageWidth)} />
+<meta property="og:image:height" content={String(imageHeight)} />
 <meta property="og:image:alt" content={imageAlt} />
 <meta property="og:site_name" content={site.name} />
 <meta property="og:locale" content="es_ES" />
@@ -57,4 +71,4 @@ const organization = {
 <meta name="twitter:image" content={imageURL} />
 <meta name="twitter:image:alt" content={imageAlt} />
 
-<script type="application/ld+json" set:html={JSON.stringify(organization)} />
+<script type="application/ld+json" set:html={serializeJsonLd(jsonLd)} />

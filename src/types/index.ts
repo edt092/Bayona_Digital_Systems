@@ -5,6 +5,12 @@ export type ServiceSlug = 'productos-web' | 'automatizacion-datos';
 export interface Service {
   slug: ServiceSlug;
   title: string;
+  /** Título SEO sin marca (la marca la añade buildTitle) */
+  seoTitle: string;
+  seoDescription: string;
+  serviceType: string;
+  /** Fecha ISO del último cambio sustancial de la página (sitemap lastmod) */
+  updated: string;
   /** Titular orientado a la necesidad, usado como H1 en la página del servicio */
   headline: string;
   summary: string;
@@ -23,6 +29,10 @@ export interface Service {
 export interface Project {
   slug: string;
   title: string;
+  /** Título SEO sin marca (la marca la añade buildTitle) */
+  seoTitle: string;
+  /** Fecha ISO del último cambio sustancial de la página (sitemap lastmod) */
+  updated: string;
   /** Reto resuelto, usado como H1 del caso */
   headline: string;
   sector: string;

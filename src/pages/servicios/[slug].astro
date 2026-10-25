@@ -8,6 +8,8 @@ import { services } from '@/data/services';
 import { processSteps } from '@/data/process';
 import { getProject } from '@/data/projects';
 import type { Project } from '@/types';
+import { site } from '@/data/site';
+import { serviceNode } from '@/lib/seo';
 
 export function getStaticPaths() {
   return services.map(service => ({ params: { slug: service.slug }, props: { service } }));
@@ -16,9 +18,17 @@ export function getStaticPaths() {
 const { service } = Astro.props;
 const related = service.relatedProjects.map(getProject).filter((p): p is Project => Boolean(p));
 const contactHref = `/contacto/?servicio=${service.slug}`;
+const schema = [
+  serviceNode(site.url, {
+    name: service.title,
+    serviceType: service.serviceType,
+    description: service.seoDescription,
+    url: new URL(`/servicios/${service.slug}/`, Astro.site).toString(),
+  }),
+];
 ---
 
-<Layout title={service.headline} description={service.summary}>
+<Layout title={service.seoTitle} description={service.seoDescription} schema={schema}>
   <PageHeader
     eyebrow={service.title}
     title={service.headline}

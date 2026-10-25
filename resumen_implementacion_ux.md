@@ -60,7 +60,7 @@ Hay variables de Supabase/EmailJS en `.env`, pero la integración era solo de cl
 
 1. **Confirmar que `hola@bayonadigitalsystems.com` recibe correo** y quién responde. El copy dice que "Edwin Bayona revisa cada mensaje": ajustarlo si no es así.
 2. **Agenda/formulario con backend:** si se quiere reactivar, hace falta validación en servidor, reserva atómica, confirmación solo tras guardar y actualizar la política de privacidad antes de activarlo.
-3. **LinkedIn:** el repo tenía dos perfiles distintos (`/in/bayonadigital` y `/in/edwin-bayona-dev`). Se omitió hasta confirmar cuál es el oficial.
+3. **LinkedIn:** resuelto. El propietario confirmó `linkedin.com/in/edwin-johan-bayona-4aa4b5428/` (añadido en schema, footer y bio).
 4. **Evidencia de casos:** confirmar permiso para mostrar nombres y capturas de KS Promocionales y PromoGimmicks, el rol exacto en cada proyecto, y si las cifras 2.096 / 2.008 / +1.000 siguen vigentes. Fechas y resultados comerciales se omitieron por falta de datos.
 5. **Assets sin uso:** `public/companies_logos/*` (incluía logos de los testimonios retirados) se eliminó. Siguen en `public/` sin referencias: `images/bayona_digital_header.png` (imagen de marketing con persona de stock) y los logos de marca `bds-logo.png`, `logo-eb.png`, `logo.svg`.
 6. **Textos legales:** redactados a partir de las prácticas reales del sitio (Netlify, Google Fonts, correo), sin revisión jurídica ni razón social. Validar con asesoría si aplica.
