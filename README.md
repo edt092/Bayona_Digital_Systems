@@ -49,7 +49,7 @@
 ├── public/
 │   ├── favicon.svg
 │   ├── logo.svg
-│   ├── bds-logo.png
+│   ├── logo-mark.svg
 │   └── images/              # Imágenes de proyectos
 ├── src/
 │   ├── components/
