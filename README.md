@@ -50,7 +50,7 @@
 │   ├── favicon.svg
 │   ├── logo.svg
 │   ├── logo-mark.svg
-│   └── images/              # Imágenes de proyectos
+│   └── og-image.png
 ├── src/
 │   ├── components/
 │   │   ├── layout/          # Layout, Navbar, Footer, SEO
