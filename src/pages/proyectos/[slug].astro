@@ -59,7 +59,7 @@ const contactHref = `/contacto/?servicio=${project.services[0]}`;
         <h2 id="resumen-title" class="sr-only">Resumen ejecutivo</h2>
         <dl class="grid gap-px overflow-hidden rounded-[var(--radius-card)] border border-line bg-line md:grid-cols-3">
           <div class="bg-base p-6">
-            <dt class="font-mono text-[0.8125rem] text-muted">Proyecto</dt>
+            <dt class="font-mono text-[0.8125rem] text-muted">{project.client ? 'Cliente' : 'Proyecto'}</dt>
             <dd class="mt-2 font-display text-lg font-semibold text-ink">{project.title}</dd>
           </div>
           <div class="bg-base p-6">

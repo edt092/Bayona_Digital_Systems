@@ -8,6 +8,7 @@ import jjImage from '@/assets/projects/promocionalesjj.png';
 const allProjects: Project[] = [
   {
     slug: 'ks-promocionales',
+    client: true,
     title: 'KS Promocionales',
     seoTitle: 'KS Promocionales: catálogo B2B automatizado',
     updated: '2026-10-25',
@@ -77,6 +78,7 @@ const allProjects: Project[] = [
   },
   {
     slug: 'promogimmicks',
+    client: true,
     title: 'PromoGimmicks',
     seoTitle: 'PromoGimmicks: catálogo actualizado a diario',
     updated: '2026-10-25',
@@ -145,6 +147,7 @@ const allProjects: Project[] = [
   },
   {
     slug: 'kspromocionales-co',
+    client: true,
     title: 'KS Promocionales Colombia',
     seoTitle: 'KS Promocionales Colombia: catálogo B2B',
     updated: '2026-10-25',
@@ -215,6 +218,7 @@ const allProjects: Project[] = [
   },
   {
     slug: 'promocionalesjj',
+    client: true,
     title: 'Promocionales J&J',
     seoTitle: 'Promocionales J&J: catálogo y cotización',
     updated: '2026-10-25',

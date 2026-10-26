@@ -53,6 +53,8 @@ export interface Project {
   githubUrl?: string;
   /** Sitio publicado del proyecto */
   liveUrl?: string;
+  /** Proyecto realizado para un cliente (confirmado por el propietario) */
+  client?: boolean;
   featured: boolean;
   /** false oculta el caso del sitio (p. ej. en construcción) sin borrar sus datos */
   published?: boolean;

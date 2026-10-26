@@ -25,7 +25,7 @@ const serviceNames = project.services.map(s => getService(s)?.title).filter(Bool
     />
   </div>
   <div class="flex flex-1 flex-col p-6">
-    <p class="font-mono text-[0.8125rem] text-muted">{project.sector}</p>
+    <p class="font-mono text-[0.8125rem] text-muted">{project.client && <span class="text-action">Cliente · </span>}{project.sector}</p>
     <Heading class="mt-2 text-xl">
       <a href={`/proyectos/${project.slug}/`} class="case-link">
         {project.title}
