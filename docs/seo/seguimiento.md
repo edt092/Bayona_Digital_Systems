@@ -20,7 +20,7 @@
 
 | Métrica | Fuente | Valor D0+14 | D0+4 sem | D0+8 sem |
 |---|---|---|---|---|
-| URLs en sitemap (inventario del build) | `pnpm run check:seo` | 12 | | |
+| URLs en sitemap (inventario del build) | `pnpm run check:seo` | 13 | | |
 | URLs indexadas / excluidas (y motivo) | GSC → Páginas | | | |
 | Consultas de marca: impresiones / clics | GSC → Rendimiento (filtro "bayona") | | | |
 | Consultas sin marca: impresiones / clics / posición | GSC → Rendimiento | | | |
@@ -68,6 +68,7 @@ Ningún artículo se publica sin evidencia propia, y el blog sigue en `noindex` 
 - **CTA:** contacto con `?servicio=productos-web`.
 
 ### B3. Pipelines ETL incrementales e idempotentes: lo que evita duplicados y pérdidas
+- **Estado:** en espera. Su evidencia es el caso ContrataData, que está en construcción y no se publica por ahora.
 - **Intención:** informativa técnica ("ETL incremental", "carga idempotente").
 - **Apoya a:** `/servicios/automatizacion-datos/`.
 - **Evidencia necesaria:** el diseño de ContrataData (marca de tiempo persistida, `ON CONFLICT DO NOTHING`, tabla de rechazos) con extractos del repositorio público.

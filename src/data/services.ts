@@ -67,7 +67,7 @@ export const services: Service[] = [
       'Redirecciones 301 para toda URL que cambie',
       'Ninguna confirmación de formulario sin registro real',
     ],
-    relatedProjects: ['ks-promocionales', 'promogimmicks'],
+    relatedProjects: ['ks-promocionales', 'promogimmicks', 'kspromocionales-co', 'promocionalesjj'],
     faq: [
       {
         question: '¿Trabajas con mi plataforma actual o hay que migrar?',
@@ -156,7 +156,7 @@ export const services: Service[] = [
       'Credenciales fuera del código y del repositorio',
       'Alertas o registros revisables cuando una ejecución falla',
     ],
-    relatedProjects: ['contratadata', 'promogimmicks', 'ks-promocionales'],
+    relatedProjects: ['promogimmicks', 'ks-promocionales', 'kspromocionales-co'],
     faq: [
       {
         question: '¿Qué pasa si la fuente de datos cambia?',
@@ -166,7 +166,7 @@ export const services: Service[] = [
       {
         question: '¿Qué fuentes de datos se han automatizado en los casos publicados?',
         answer:
-          'Catálogos web de proveedores (extracción con Python), la API pública Socrata de datos.gov.co y bases de datos PostgreSQL. Otras fuentes se evalúan en el descubrimiento según su formato y condiciones de uso.',
+          'Catálogos web de proveedores (extracción con Python), bases de datos PostgreSQL y catálogos en JSON versionado que se adaptan y depuran por script. Otras fuentes se evalúan en el descubrimiento según su formato y condiciones de uso.',
       },
       {
         question: '¿Dónde se ejecutan los procesos?',

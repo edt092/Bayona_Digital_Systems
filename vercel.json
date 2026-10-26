@@ -58,6 +58,16 @@
       "source": "/proyectos/clinica-dental/",
       "destination": "/proyectos/",
       "permanent": true
+    },
+    {
+      "source": "/proyectos/contratadata",
+      "destination": "/proyectos/",
+      "permanent": false
+    },
+    {
+      "source": "/proyectos/contratadata/",
+      "destination": "/proyectos/",
+      "permanent": false
     }
   ]
 }

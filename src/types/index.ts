@@ -51,7 +51,11 @@ export interface Project {
   image: ImageMetadata;
   imageAlt: string;
   githubUrl?: string;
+  /** Sitio publicado del proyecto */
+  liveUrl?: string;
   featured: boolean;
+  /** false oculta el caso del sitio (p. ej. en construcción) sin borrar sus datos */
+  published?: boolean;
 }
 
 export interface ProcessStep {

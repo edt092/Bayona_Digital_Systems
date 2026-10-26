@@ -142,3 +142,11 @@ Después, abrir Home, un servicio, un caso y contacto en Chrome y revisar que la
 - **Propietario:** P1 (GSC), P2 (mercado), P4 (años y roles de los casos), P5 (dominio principal en Netlify). P3 (LinkedIn) ya está resuelto.
 - **Desarrollo, tras el despliegue:** §5, P6 (pasar la CSP a obligatoria), P7 (laboratorio de rendimiento), Rich Results Test.
 - **Contenido, a D0 + 8 semanas:** revisar el mapa de intención con datos reales y elegir el primer brief del backlog.
+
+## 8. Actualización — casos de estudio (25/10/2026)
+
+- **Nuevos casos:** `/proyectos/kspromocionales-co/` (KS Promocionales Colombia, destacado en la Home en lugar de ContrataData) y `/proyectos/promocionalesjj/` (Promocionales J&J). Su contenido sale de los repositorios públicos y del código local de cada proyecto (recuentos de `data/*.json`, políticas y scripts versionados). Las capturas son de las portadas en producción del 25/10/2026.
+- **ContrataData:** oculto con `published: false` (los datos se conservan). Sale del sitemap, del `llms.txt`, de los servicios y de la bio. `/proyectos/contratadata/` redirige con **302** (temporal) a `/proyectos/` en `netlify.toml` y `vercel.json`. Al publicarlo: quitar `published: false` y las dos redirecciones.
+- **Campo nuevo `liveUrl`:** enlace "Ver sitio publicado" en el resumen de los casos que lo tienen.
+- **Inventario:** 15 HTML, 13 URLs indexables en el sitemap y 5 imágenes OG (incluida la general).
+

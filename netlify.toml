@@ -37,3 +37,15 @@
   status = 301
   force = true
 
+# Caso en construcción: redirección temporal hasta que vuelva a publicarse
+[[redirects]]
+  from = "/proyectos/contratadata"
+  to = "/proyectos/"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/proyectos/contratadata/"
+  to = "/proyectos/"
+  status = 302
+  force = true

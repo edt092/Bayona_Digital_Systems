@@ -22,7 +22,9 @@
 | `/proyectos/` | Investigación (evidencia) | casos de estudio de desarrollo B2B | ejemplos de catálogos B2B automatizados · proyectos de integración de datos | 3 casos con reto y resultado técnico | Apertura de un caso |
 | `/proyectos/ks-promocionales/` | Investigación | catálogo B2B automatizado (caso) | generación estática de páginas de producto · enriquecimiento de catálogo con IA | Pipeline paso a paso, decisiones, repositorio público | Servicio relacionado o contacto |
 | `/proyectos/promogimmicks/` | Investigación | catálogo actualizado automáticamente a diario (caso) | scraping diario con GitHub Actions · actualización automática de e-commerce | Pipeline, decisiones, repositorio público | Servicio relacionado o contacto |
-| `/proyectos/contratadata/` | Investigación | ETL de datos de contratación pública (caso) | API de datos SECOP · pipeline incremental idempotente | Pipeline, decisiones, repositorio público | Servicio relacionado o contacto |
+| `/proyectos/kspromocionales-co/` | Investigación | catálogo B2B de productos promocionales en Colombia (caso) | política de indexabilidad de catálogo · consolidar productos duplicados con 301 | Política única de indexación, 88 alias 301, repositorio público, sitio publicado | Servicio relacionado o contacto |
+| `/proyectos/promocionalesjj/` | Investigación | catálogo con buscador y cotización por WhatsApp (caso) | paginación rastreable en Next.js · cotización multiproducto por WhatsApp | Taxonomía reproducible, buscador con filtros, repositorio público, sitio publicado | Servicio relacionado o contacto |
+| `/proyectos/contratadata/` | — (no publicado) | — | — | Caso en construcción: oculto con `published: false` y redirección 302 a `/proyectos/` | — |
 | `/como-trabajamos/` | Confianza | proceso de desarrollo web por fases | quién realiza el trabajo · entregables de un proyecto web | 5 fases con entregables, responsable técnico, GitHub | Contacto |
 | `/contacto/` | Transaccional | contacto Bayona Digital Systems | — | Qué ocurre después, uso de datos | Correo enviado (no medible desde el sitio) |
 | `/privacidad/`, `/terminos/` | Informativa (legal) | — | — | — | — |

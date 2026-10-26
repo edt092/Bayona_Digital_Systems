@@ -69,10 +69,15 @@ const contactHref = `/contacto/?servicio=${project.services[0]}`;
             </dd>
           </div>
           <div class="bg-base p-6">
-            <dt class="font-mono text-[0.8125rem] text-muted">Código</dt>
-            <dd class="mt-2">
+            <dt class="font-mono text-[0.8125rem] text-muted">{project.liveUrl ? 'Sitio y código' : 'Código'}</dt>
+            <dd class="mt-2 space-y-1">
+              {project.liveUrl && (
+                <a href={project.liveUrl} class="text-link block" target="_blank" rel="noopener noreferrer">
+                  Ver sitio publicado<span class="sr-only"> (se abre en una pestaña nueva)</span>
+                </a>
+              )}
               {project.githubUrl ? (
-                <a href={project.githubUrl} class="text-link" target="_blank" rel="noopener noreferrer">
+                <a href={project.githubUrl} class="text-link block" target="_blank" rel="noopener noreferrer">
                   Ver repositorio público<span class="sr-only"> (se abre en una pestaña nueva)</span>
                 </a>
               ) : (
@@ -148,7 +153,7 @@ const contactHref = `/contacto/?servicio=${project.services[0]}`;
         <div class="space-y-4">
           <details class="panel group p-0" open>
             <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 px-6 py-4 font-display text-lg font-semibold text-ink">
-              Pipeline paso a paso
+              Cómo funciona, paso a paso
               <svg class="shrink-0 text-muted transition-transform group-open:rotate-180" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
             </summary>
             <ol class="space-y-4 border-t border-line px-6 py-5">

@@ -18,7 +18,7 @@ import { projects } from '@/data/projects';
   />
 
   <section class="section" aria-label="Listado de casos">
-    <div class="container-site grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div class:list={["container-site grid gap-6 md:grid-cols-2", projects.length % 3 === 0 && "lg:grid-cols-3"]}>
       {projects.map(project => <CaseCard project={project} headingLevel="h2" />)}
     </div>
   </section>

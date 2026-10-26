@@ -2,8 +2,10 @@ import type { Project } from '@/types';
 import ksImage from '@/assets/projects/ks-promocionales.png';
 import promogimmicksImage from '@/assets/projects/promogimmicks.png';
 import contratadataImage from '@/assets/projects/contratadata.png';
+import ksColombiaImage from '@/assets/projects/kspromocionales-co.png';
+import jjImage from '@/assets/projects/promocionalesjj.png';
 
-export const projects: Project[] = [
+const allProjects: Project[] = [
   {
     slug: 'ks-promocionales',
     title: 'KS Promocionales',
@@ -142,6 +144,146 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: 'kspromocionales-co',
+    title: 'KS Promocionales Colombia',
+    seoTitle: 'KS Promocionales Colombia: catálogo B2B',
+    updated: '2026-10-25',
+    headline: 'Un catálogo B2B de 2.097 productos para Colombia con cotización por WhatsApp',
+    sector: 'Comercio B2B · Productos promocionales (Colombia)',
+    services: ['productos-web', 'automatizacion-datos'],
+    summary:
+      'Sitio de productos promocionales para Colombia en Astro: 2.097 fichas en 37 categorías, buscador propio y una lista de cotización que se envía por WhatsApp.',
+    problem:
+      'Había que abrir el canal en Colombia sin rehacer el catálogo desde cero: reutilizar los datos del sitio de Ecuador, adaptarlos al mercado colombiano y evitar fichas duplicadas o vacías a gran escala.',
+    solution:
+      'Un script adapta una sola vez el catálogo del motor de Ecuador. Astro genera el sitio estático y una política de indexabilidad única decide qué fichas se indexan, qué entra en el sitemap y qué revisa la auditoría que se ejecuta antes de cada build.',
+    scope: [
+      'Sitio estático con Astro 4 y Tailwind CSS',
+      'Adaptación del catálogo semilla desde el caso de Ecuador',
+      'Política de indexabilidad compartida por fichas, sitemap y auditoría',
+      'Buscador del catálogo con sinónimos locales',
+      'Lista «Mi cotización» con envío por WhatsApp',
+    ],
+    output: '2.097 fichas de producto en 37 categorías; 2.094 indexables según la política del proyecto y 88 duplicados resueltos con redirección 301.',
+    decisions: [
+      {
+        title: 'Una sola política de indexabilidad',
+        description:
+          'La misma función decide el noindex de cada ficha, el filtro del sitemap y la auditoría que detiene el build si hay errores en los datos.',
+      },
+      {
+        title: 'Duplicados con 301, no con noindex',
+        description:
+          'Las fichas duplicadas se consolidan en un producto principal (88 alias) con redirecciones permanentes generadas en el build.',
+      },
+      {
+        title: 'Cotización sin datos personales',
+        description:
+          'La lista guarda solo referencias y cantidades en el navegador, caduca a los 30 días sin uso y la solicitud se envía por WhatsApp.',
+      },
+    ],
+    outputs: [
+      'Buscador que ignora tildes y plurales y entiende sinónimos locales (lapicero/esfero, mug/taza)',
+      'Redirecciones de dominios antiguos resueltas en un solo salto',
+      'Fechas del sitemap solo con cambios editoriales reales',
+      'Pruebas automáticas de la política de indexación y del buscador',
+    ],
+    limitations:
+      'Las cifras describen la configuración del catálogo (fichas generadas e indexables), no la indexación efectiva en buscadores ni resultados comerciales.',
+    techStack: [
+      { name: 'Astro 4', role: 'Generación estática del sitio' },
+      { name: 'Tailwind CSS', role: 'Estilos' },
+      { name: '@astrojs/sitemap', role: 'Sitemap filtrado por la política de indexación' },
+      { name: 'Node.js', role: 'Scripts de adaptación, corrección y auditoría del catálogo' },
+      { name: 'GSAP', role: 'Animación de la cabecera' },
+      { name: 'Netlify', role: 'CDN, redirecciones y cabeceras de seguridad' },
+    ],
+    pipeline: [
+      'Un script adapta una vez el catálogo del motor de Ecuador: ciudades y país, con reemplazo por palabra completa.',
+      'Scripts de corrección consolidan productos duplicados y reparan textos del catálogo.',
+      'Una auditoría de los datos se ejecuta en modo estricto y detiene el build si encuentra errores.',
+      'Astro genera las fichas, 37 categorías con paginación, el blog y las páginas por intención de búsqueda.',
+      'La política de indexabilidad aplica noindex a las fichas sin contenido propio y las deja fuera del sitemap.',
+      'El build genera las redirecciones 301 de los alias y de los dominios antiguos.',
+      'Netlify publica el sitio con cabeceras de seguridad (CSP y HSTS).',
+    ],
+    image: ksColombiaImage,
+    imageAlt: 'Página de inicio de KS Promocionales Colombia con el titular «Productos promocionales para que tu marca se haga notar» y el botón Cotizar por WhatsApp',
+    githubUrl: 'https://github.com/edt092/kspromocionales',
+    liveUrl: 'https://www.kspromocionales.co/',
+    featured: true,
+  },
+  {
+    slug: 'promocionalesjj',
+    title: 'Promocionales J&J',
+    seoTitle: 'Promocionales J&J: catálogo y cotización',
+    updated: '2026-10-25',
+    headline: 'Un catálogo de 840 productos con buscador y cotización guiada por WhatsApp',
+    sector: 'Comercio B2B · Productos promocionales (Colombia)',
+    services: ['productos-web'],
+    summary:
+      'Tienda de productos promocionales para Colombia en Next.js: 840 productos en 39 categorías, buscador con filtros y cotización guiada que se envía por WhatsApp.',
+    problem:
+      'El catálogo de 840 productos tenía categorías vacías y no todos los productos eran alcanzables mediante enlaces rastreables. Hacía falta ordenar la taxonomía y facilitar que el cliente encontrara productos y armara su solicitud.',
+    solution:
+      'Exportación estática de Next.js con paginación rastreable, una reclasificación del catálogo reproducible por script, un buscador por nombre, referencia y filtros reales, y una cotización multiproducto que genera un mensaje editable para WhatsApp.',
+    scope: [
+      'Sitio estático con Next.js 14 (exportación estática) y Tailwind CSS',
+      'Reclasificación del catálogo con un script reproducible',
+      'Buscador con sinónimos y filtros por categoría, material y técnica',
+      'Cotización guiada multiproducto con mensaje editable',
+      'Datos estructurados factuales y verificación SEO del build',
+    ],
+    output: '840 productos en 39 categorías, todos alcanzables mediante enlaces HTML gracias a la paginación estática.',
+    decisions: [
+      {
+        title: 'Datos estructurados factuales',
+        description:
+          'Fichas Product sin precios ni marcas inventados, y Service por ciudad en lugar de un negocio local ficticio.',
+      },
+      {
+        title: 'Taxonomía reproducible',
+        description:
+          'La reclasificación se hace con un script versionado: se poblaron 8 categorías vacías con productos reales y se retiraron 5 sin oferta.',
+      },
+      {
+        title: 'Estado de búsqueda en la URL',
+        description:
+          'La consulta y los filtros viven en la URL, se conserva la posición y hay estados para «sin resultados» y reintento ante un fallo.',
+      },
+    ],
+    outputs: [
+      'Imágenes servidas por Netlify Image CDN mediante un loader propio',
+      'Analítica de uso sin datos personales (búsqueda, ficha, cotización y clic a WhatsApp)',
+      'Pruebas automáticas de las reglas de cotización y del buscador',
+      'Comprobaciones de UX automatizadas en 9 anchos de pantalla',
+    ],
+    limitations:
+      'El caso describe la arquitectura y las funciones del sitio; no se publican métricas de tráfico ni de ventas.',
+    techStack: [
+      { name: 'Next.js 14', role: 'Exportación estática del sitio' },
+      { name: 'React 18 + TypeScript', role: 'Interfaz y tipado' },
+      { name: 'Tailwind CSS', role: 'Estilos' },
+      { name: 'GSAP', role: 'Animaciones' },
+      { name: 'Netlify Image CDN', role: 'Optimización de imágenes' },
+      { name: 'Netlify', role: 'Despliegue y cabeceras' },
+    ],
+    pipeline: [
+      'El catálogo vive en JSON versionado: productos, categorías y artículos del blog.',
+      'Un script reclasifica el catálogo de forma reproducible antes de publicar.',
+      'Next.js genera en el build las fichas, la tienda y las categorías con paginación estática.',
+      'El índice de búsqueda se publica como un JSON estático que consulta el buscador en el navegador.',
+      'La cotización guiada valida las cantidades por producto y compone un mensaje editable para WhatsApp.',
+      'Un script de verificación SEO revisa el sitio exportado en modo estricto.',
+      'Netlify publica el sitio y optimiza las imágenes con su Image CDN.',
+    ],
+    image: jjImage,
+    imageAlt: 'Página de inicio de Promocionales J&J con el titular «Merchandising que deja marca en Colombia» y los botones Explorar catálogo y Cotizar por WhatsApp',
+    githubUrl: 'https://github.com/edt092/promocionalesjj',
+    liveUrl: 'https://www.promocionalesjj.co/',
+    featured: false,
+  },
+  {
     slug: 'contratadata',
     title: 'ContrataData',
     seoTitle: 'ContrataData: datos de contratación pública',
@@ -207,9 +349,14 @@ export const projects: Project[] = [
     image: contratadataImage,
     imageAlt: 'Panel de ContrataData con indicadores de contratación pública, filtros y tabla de contratos',
     githubUrl: 'https://github.com/edt092/contratadata',
-    featured: true,
+    featured: false,
+    // En construcción: no se muestra hasta que esté listo (su URL redirige con 302 a /proyectos/)
+    published: false,
   },
 ];
+
+/** Casos visibles en el sitio */
+export const projects = allProjects.filter(p => p.published !== false);
 
 export const featuredProjects = projects.filter(p => p.featured);
 

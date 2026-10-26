@@ -139,7 +139,7 @@ const schema = [
   <section id="casos" class="section" aria-labelledby="casos-title">
     <div class="container-site">
       <h2 id="casos-title" class="text-[clamp(1.5rem,3vw,2rem)]">Casos relacionados</h2>
-      <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class:list={["mt-8 grid gap-6 md:grid-cols-2", related.length % 3 === 0 && "lg:grid-cols-3"]}>
         {related.map(project => <CaseCard project={project} />)}
       </div>
     </div>
